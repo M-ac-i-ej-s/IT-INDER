@@ -1,0 +1,29 @@
+.login__div.manager {
+    position:absolute;
+    width: 50%;
+    height: 89vh;
+    background-color: #d059fc;
+    background-image: linear-gradient(72deg, rgba(208, 89, 252, 1) 0%, rgba(41, 53, 86, 1) 100%);
+    display: flex;
+    justify-content: center;
+    z-index: 0;
+    -webkit-box-shadow: inset 11px 16px 24px -9px rgba(84, 84, 84, 1);
+    -moz-box-shadow: inset 11px 16px 24px -9px rgba(84, 84, 84, 1);
+    box-shadow: inset 11px 16px 24px -9px rgba(84, 84, 84, 1);
+    .login__block.manager {
+        border-radius: 20px;
+        margin-top: 200px;
+        width: 450px;
+        height: 250px;
+        padding: 40px;
+        background-color: white;
+        display: flex;
+        flex-direction: column;
+        -webkit-box-shadow: 10px 9px 30px -1px rgba(76, 76, 76, 1);
+        -moz-box-shadow: 10px 9px 30px -1px rgba(76, 76, 76, 1);
+        box-shadow: 10px 9px 30px -1px rgba(76, 76, 76, 1);
+        span {
+            padding-bottom: 30px;
+        }
+    }
+}
