@@ -7,7 +7,9 @@ import ManagerForm from './ManagerForm';
 import WorkerForm from './WorkerForm';
 import ManagerDescription from './ManagerDescription';
 import WorkerDescription from './WorkerDescription';
+import Footer from './Footer';
 import '../../styles/welcomePage/arrows.scss'
+import Divider from '@mui/material/Divider';
 
 function WelcomePage() {
   return (
@@ -25,6 +27,8 @@ function WelcomePage() {
           <WorkerDescription/>
           <WorkerForm/>
         </div>
+        <Divider sx={{padding:'30px', margin: '0 60px 0 60px'}}/>
+        <Footer/>
    </div>
   );
 }

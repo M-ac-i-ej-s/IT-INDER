@@ -2,9 +2,17 @@ import React from 'react';
 import '../../styles/welcomePage/workerDescription.scss'
 import DoneOutlineIcon from '@mui/icons-material/DoneOutline';
 
+
 function WorkerDescription() {
 
-  const arrayOfQuotes: string[] = ['Create project with someone now!', 'Create project with someone now!', 'Create project with someone now!', 'Create project with someone now!', 'Create project with someone now!']
+  const arrayOfQuotes: string[] = [
+    'Look for an inspiration!', 
+    'Join projects you really like!', 
+    'Gain experience!', 
+    'Meet new coding friends!', 
+    'Learn from each other!'
+  ]
+
   return (
 
    <div className='worker_description__div'>

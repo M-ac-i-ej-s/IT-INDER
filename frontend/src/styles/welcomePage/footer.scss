@@ -1,0 +1,17 @@
+.footer__div {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 30px;
+    .ug__img {
+        width: 400px;
+        padding-right: 40px;
+    }
+    div {
+        display: flex;
+        flex-direction: column;
+        span {
+            font-size: 30px;
+        }
+    }
+}
