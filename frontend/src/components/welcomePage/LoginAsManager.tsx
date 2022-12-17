@@ -3,6 +3,14 @@ import '../../styles/welcomePage/loginAsManager.scss'
 import Button from '@mui/material/Button';
 
 function LoginAsManager() {
+
+  const scrollFun = () => {
+    window.scrollTo({
+      top: 900,
+      behavior: 'smooth',
+    });
+  };
+  
   return (
    <div className='login__div manager'>
         <div className='login__block manager'>
@@ -12,7 +20,7 @@ function LoginAsManager() {
                 Register as Project Master and look for programmers 
                 that fits your requirements! 
             </span>
-            <Button sx={{width:'120px'}}color="secondary" variant="contained" size="large">Register</Button>
+            <Button onClick={scrollFun} sx={{width:'120px'}}color="secondary" variant="contained" size="large">Register</Button>
         </div>
    </div>
   );
