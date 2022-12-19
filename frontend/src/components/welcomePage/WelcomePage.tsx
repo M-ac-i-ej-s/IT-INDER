@@ -1,5 +1,5 @@
 import React from 'react';
-import NavBar from './NavBar';
+import NavBar from '../reusableComponents/NavBar';
 import LoginAsManager from './LoginAsManager';
 import SyncAltIcon from '@mui/icons-material/SyncAlt';
 import LoginAsWorker from './LoginAsWorker';

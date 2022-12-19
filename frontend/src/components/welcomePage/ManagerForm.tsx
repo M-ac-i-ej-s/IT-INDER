@@ -3,12 +3,14 @@ import '../../styles/welcomePage/managerForm.scss'
 import {  TextField, FormControl, OutlinedInput, InputAdornment, IconButton, Button } from '@mui/material';
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
+import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
 import { useFormik } from 'formik';
 import { v4 as uuidv4 } from 'uuid';
 
 function ManagerForm() {
   const [showPassword, setShowPassword] = React.useState(false);
   const [borderError, setBorderError] = React.useState('white')
+  const [infoHover, setInfoHover] = React.useState('0')
 
   const handleClickShowPassword = () => setShowPassword((show) => !show);
 
@@ -29,6 +31,14 @@ function ManagerForm() {
     } else {
       return false
     }
+  };
+
+  const handleMouseOver = () => {
+    setInfoHover('0.9');
+  };
+
+  const handleMouseOut = () => {
+    setInfoHover('0');
   };
 
   const formik = useFormik({
@@ -68,19 +78,22 @@ function ManagerForm() {
           <FormControl color='secondary' sx={{ width: '25ch', margin: '10px', backgroundColor:'white', borderRadius:'5px' }} >
             <OutlinedInput id='name' name='name' value={formik.values.name} onChange={formik.handleChange} onBlur={formik.handleBlur} placeholder="Project's name" />
           </FormControl>
-          <TextField
-          id="outlined-basic 2"
-          name='description'
-          label="Description"
-          variant="outlined"
-          color='secondary'
-          multiline
-          rows={4}
-          value={formik.values.description} 
-          onChange={formik.handleChange}
-          onBlur={formik.handleBlur}
-          sx={{width: '300px', margin: '10px', backgroundColor:'white', borderRadius:'5px'}}
-        />
+          <div className='description__box'> 
+            <TextField
+            id="outlined-basic 2"
+            name='description'
+            label="Description"
+            variant="outlined"
+            color='secondary'
+            multiline
+            rows={4}
+            value={formik.values.description} 
+            onChange={formik.handleChange}
+            onBlur={formik.handleBlur}
+            sx={{width: '300px', margin: '10px', backgroundColor:'white', borderRadius:'5px'}}
+           />
+           <InfoOutlinedIcon onMouseOver={handleMouseOver} onMouseOut={handleMouseOut} sx={{color: 'white', opacity: '0.6'}}/>
+          </div>
         <FormControl color='secondary' sx={{ width: '30ch', margin: '10px', backgroundColor:'white', borderRadius:'5px', border: (borderError === 'white') ? 0 :`1px solid ${borderError}` }}>
             <OutlinedInput id='email 1' name='email' value={formik.values.email} onChange={formik.handleChange} onBlur={formik.handleBlur} placeholder={(borderError === 'white') ? 'Email' : 'Invalid Email!'} />
         </FormControl>
@@ -110,6 +123,13 @@ function ManagerForm() {
         </FormControl>
         <Button type='submit' sx={{width:'120px', margin: '10px'}} onClick={handleReset} color="secondary" variant="contained" size="large">Register</Button>
         </form>
+        <div className='popup__box' style={{opacity: infoHover}}>
+              <span>
+                Descriprion is where you will tell about the project.
+                Make sure to mention technologies you will be using, 
+                as well as expectations reagarding your future coworkers
+              </span>
+        </div>
    </div>
   );
 }

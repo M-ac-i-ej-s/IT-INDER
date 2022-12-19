@@ -3,11 +3,14 @@ import '../../styles/welcomePage/workerForm.scss'
 import {  TextField, FormControl, OutlinedInput, InputAdornment, IconButton, Button } from '@mui/material';
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
+import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
 import { useFormik } from 'formik';
 import { v4 as uuidv4 } from 'uuid';
 
 function WorkerForm() {
   const [showPassword, setShowPassword] = React.useState(false);
+  const [borderError, setBorderError] = React.useState('white')
+  const [infoHover, setInfoHover] = React.useState('0')
 
   const handleClickShowPassword = () => setShowPassword((show) => !show);
 
@@ -16,11 +19,27 @@ function WorkerForm() {
   };
 
   interface userProject {
-    projectName: string,
+    projectName: string, 
     description: string,
     email: string,
     password: string,
   }
+
+  const validateEmail = (email: string) => {
+    if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(email)) {
+        return true 
+    } else {
+      return false
+    }
+  };
+
+  const handleMouseOver = () => {
+    setInfoHover('0.9');
+  };
+
+  const handleMouseOut = () => {
+    setInfoHover('0');
+  };
 
   const formik = useFormik({
     initialValues: {
@@ -30,15 +49,19 @@ function WorkerForm() {
       password: '',
     },
     onSubmit: (values: userProject) => {
-      const id = uuidv4();
-      const person = {
-        id: id,
-        projectName: values.projectName,
-        description: values.description,
-        email: values.email,
-        password: values.password,
-      };
-      console.log(person)
+      if(!validateEmail(values.email)){
+        const id = uuidv4();
+        const person = {
+          id: id,
+          projectName: values.projectName,
+          description: values.description,
+          email: values.email,
+          password: values.password,
+        };
+        console.log(person)
+      } else {
+        setBorderError('red')
+      }
     },
   });
 
@@ -55,20 +78,23 @@ function WorkerForm() {
           <FormControl color='primary' sx={{ width: '25ch', margin: '10px', backgroundColor:'white', borderRadius:'5px' }}>
             <OutlinedInput id='projectName' name='projectName' value={formik.values.projectName} onChange={formik.handleChange} placeholder="Your name" />
           </FormControl>
-          <TextField
-          id="outlined-basic 1"
-          name='description'
-          label="Description"
-          variant="outlined"
-          color='primary'
-          multiline
-          rows={4}
-          sx={{width: '300px', margin: '10px', backgroundColor:'white', borderRadius:'5px'}}
-          value={formik.values.description} 
-          onChange={formik.handleChange}
-        />
-        <FormControl color='primary' sx={{ width: '30ch', margin: '10px', backgroundColor:'white', borderRadius:'5px' }}>
-            <OutlinedInput id='email 2' name='email' value={formik.values.email} onChange={formik.handleChange} placeholder="Email" />
+          <div className='description__box'>
+              <TextField
+              id="outlined-basic 1"
+              name='description'
+              label="Description"
+              variant="outlined"
+              color='primary'
+              multiline
+              rows={4}
+              sx={{width: '300px', margin: '10px', backgroundColor:'white', borderRadius:'5px'}}
+              value={formik.values.description} 
+              onChange={formik.handleChange}
+              />
+              <InfoOutlinedIcon onMouseOver={handleMouseOver} onMouseOut={handleMouseOut} sx={{color: 'white', opacity: '0.6'}}/>
+          </div>
+        <FormControl color='primary' sx={{ width: '30ch', margin: '10px', backgroundColor:'white', borderRadius:'5px',border: (borderError === 'white') ? 0 :`1px solid ${borderError}` }}>
+            <OutlinedInput id='email 2' name='email' value={formik.values.email} onChange={formik.handleChange} placeholder={(borderError === 'white') ? 'Email' : 'Invalid Email!'} />
         </FormControl>
         <FormControl color='primary' sx={{ width: '25ch', margin: '10px',backgroundColor:'white', borderRadius:'5px' }}>
           <OutlinedInput
@@ -95,6 +121,13 @@ function WorkerForm() {
         </FormControl>
         <Button type='submit' onClick={handleReset} sx={{width:'120px', margin: '10px'}} color="primary" variant="contained" size="large">Register</Button>
         </form>
+        <div className='popup__box' style={{opacity: infoHover}}>
+              <span>
+                Descriprion is where you will tell about the project.
+                Make sure to mention technologies you will be using, 
+                as well as expectations reagarding your future coworkers
+              </span>
+        </div>
    </div>
   );
 }
