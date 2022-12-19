@@ -5,6 +5,7 @@ import {
   Routes,
 } from 'react-router-dom';
 import WelcomePage from './components/welcomePage/WelcomePage';
+import LoginPage from './components/loginPage/LoginPage'
 
 function App() {
   return (
@@ -13,6 +14,10 @@ function App() {
         <Route
           path="/"
           element={<WelcomePage/>}
+        />
+        <Route 
+          path='/login' 
+          element={<LoginPage/>} 
         />
       </Routes>
   </Router>
