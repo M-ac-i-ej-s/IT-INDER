@@ -4,6 +4,7 @@ import { FormControl, OutlinedInput, InputAdornment, IconButton, Button } from '
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import { useFormik } from 'formik';
+import {Link} from 'react-router-dom'
 
 function LoginForm() {
   const [showPassword, setShowPassword] = React.useState(false);
@@ -76,7 +77,9 @@ function LoginForm() {
                 onChange={formik.handleChange}
                 />
             </FormControl>
-            <Button sx={{width: '100px' , margin: '10px'}} type='submit' color="secondary" variant="contained" size="large">Log in</Button>
+            <Link className='link__login' to='/home/explore'>
+              <Button sx={{width: '100px' , margin: '10px', textDecoration: 'none'}} type='submit' color="secondary" variant="contained" size="large">Log in</Button>
+            </Link>
         </form>
    </div>
   );

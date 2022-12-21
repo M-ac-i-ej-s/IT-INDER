@@ -6,6 +6,8 @@ import {
 } from 'react-router-dom';
 import WelcomePage from './components/welcomePage/WelcomePage';
 import LoginPage from './components/loginPage/LoginPage'
+import MainPage from './components/mainPage/MainPage';
+import ExplorePage from './components/mainPage/explorePage/ExplorePage';
 
 function App() {
   return (
@@ -19,6 +21,11 @@ function App() {
           path='/login' 
           element={<LoginPage/>} 
         />
+        <Route path='/home' element={<MainPage/>}>
+          <Route path='explore' element={<ExplorePage/>}/>
+          {/* <Route path='/profile' element/> */}
+          {/* <Route path='/matches' element/> */}
+        </Route>
       </Routes>
   </Router>
   );

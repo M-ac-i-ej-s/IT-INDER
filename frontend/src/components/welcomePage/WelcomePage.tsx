@@ -14,7 +14,7 @@ import Divider from '@mui/material/Divider';
 function WelcomePage() {
   return (
    <div>
-        <NavBar/>
+        <NavBar page='welcome'/>
         <LoginAsManager/>
         <SyncAltIcon sx={{fontSize: 270, color: 'white'}} className='arrows__icon'/>
         <LoginAsWorker/>
