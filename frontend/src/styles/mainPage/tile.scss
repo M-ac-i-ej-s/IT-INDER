@@ -1,0 +1,56 @@
+.tile__block {
+    position: absolute;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 100px;
+    left: 0;
+    right: 0;
+    border: 1px solid gray;
+    border-radius: 20px;
+    width: 450px;
+    height: 450px;
+    display: flex;
+    flex-direction: column;
+    transition: 0.2s ease-in-out;
+    -webkit-box-shadow: 8px 8px 24px 0px rgba(66, 68, 90, 1);
+    -moz-box-shadow: 8px 8px 24px 0px rgba(66, 68, 90, 1);
+    box-shadow: 8px 8px 24px 0px rgba(66, 68, 90, 1);
+    padding: 60px;
+    .what__span {
+        font-size: 25px;
+        font-weight: bold;
+        padding: 10px 0 10px 0;
+    }
+    .name__span {
+        font-size: 35px;
+    }
+    .description__span {
+        padding: 10px;
+        height: 250px;
+        overflow: auto;
+        font-size: 20px;
+    }
+}
+.buttons__div {
+   position: absolute;
+   margin-left: auto;
+   margin-right: auto;
+   margin-top: 750px;
+   width: 300px;
+   display: flex;
+   justify-content: space-between;
+   left: 0;
+   right: 0;
+   text-align: center;
+}
+.error__span {
+   position: absolute;
+   margin-left: auto;
+   margin-right: auto;
+   left: 0;
+   right: 0;
+   width: 400px;
+   margin-top: 200px;
+   text-align: center;
+   font-size: 50px;
+}
