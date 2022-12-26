@@ -15,4 +15,22 @@
     .link__home {
         text-decoration: none;
     }
+    .buttons__group {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        .section__buttons {
+            margin-right: 30px;
+            .name__span.button {
+                font-size: 30px;
+                margin: 0 5px 0 5px;
+                padding: 10px 15px 10px 15px;
+                border-radius: 20px;
+                transition: 0.2s ease-in-out;
+            }
+            .name__span.button:hover {
+                background-color: rgb(0, 0, 0, 0.02);
+            }
+        }
+    }
 }

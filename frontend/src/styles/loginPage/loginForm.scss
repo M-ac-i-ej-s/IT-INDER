@@ -13,4 +13,7 @@
     top: 30%;
     display: flex;
     flex-direction: column;
+    .link__login {
+        text-decoration: none;
+    }
 }
