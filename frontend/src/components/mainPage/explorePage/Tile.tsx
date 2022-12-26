@@ -5,7 +5,7 @@ import ThumbDownIcon from '@mui/icons-material/ThumbDown';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import PropTypes, {InferProps} from 'prop-types';
 
-function Tile({name, description, nextFun}: InferProps<typeof Tile.propTypes>) {
+function Tile({name, description, likeFun, dislikeFun, id}: InferProps<typeof Tile.propTypes>) {
     const [tileStyle, setTileStyle] = useState({transform:'', left:''})     
 
   return (
@@ -31,11 +31,11 @@ function Tile({name, description, nextFun}: InferProps<typeof Tile.propTypes>) {
         <div className='buttons__div'>
             { /* eslint-disable */ }
             {/* @ts-ignore */}
-            <IconButton onClick={nextFun} onMouseEnter={() => setTileStyle({transform:'rotate(-10deg)', left: '-200px'})} onMouseLeave={() => setTileStyle({transform:'', left: ''})} sx={{color: '#d93416'}}>
+            <IconButton onClick={() => dislikeFun(id)} onMouseEnter={() => setTileStyle({transform:'rotate(-10deg)', left: '-200px'})} onMouseLeave={() => setTileStyle({transform:'', left: ''})} sx={{color: '#d93416'}}>
                 <ThumbDownIcon sx={{fontSize: '60px'}}/>
             </IconButton>
             {/* @ts-ignore */}
-            <IconButton onClick={nextFun} onMouseEnter={() => setTileStyle({transform:'rotate(10deg)', left: '200px'})} onMouseLeave={() => setTileStyle({transform:'', left: ''})} sx={{color: '#3fcc59'}}>
+            <IconButton onClick={() => likeFun(id)} onMouseEnter={() => setTileStyle({transform:'rotate(10deg)', left: '200px'})} onMouseLeave={() => setTileStyle({transform:'', left: ''})} sx={{color: '#3fcc59'}}>
                 <FavoriteIcon sx={{fontSize: '60px'}}/>
             </IconButton>
             { /* eslint-enable */ }
@@ -47,7 +47,9 @@ function Tile({name, description, nextFun}: InferProps<typeof Tile.propTypes>) {
 Tile.propTypes = {
     name: PropTypes.string,
     description: PropTypes.string,
-    nextFun: PropTypes.func
+    likeFun: PropTypes.func,
+    dislikeFun: PropTypes.func,
+    id: PropTypes.string
 }
 
 export default Tile;

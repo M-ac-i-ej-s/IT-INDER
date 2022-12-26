@@ -79,16 +79,6 @@ export const exploreSlice = createSlice({
   reducers: {
     LIKED: (state: stateType, action: PayloadAction<string>) => {
         state.user.likes.push(action.payload)
-        // TAKE TO PAGE
-        // if(state.type === 'worker') {
-        //     let check = false
-        //     const project = state.projects.find(el => el.id === action.payload)
-        //     if(project){
-        //         project.likes.includes(state.user.id)
-        //         check = true
-        //     }
-        // }
-
     },
     DISLIKED: (state: stateType, action:PayloadAction<string>) => {
         state.user.dislikes.push(action.payload)
