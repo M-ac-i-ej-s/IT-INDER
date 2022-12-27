@@ -8,6 +8,8 @@ import WelcomePage from './components/welcomePage/WelcomePage';
 import LoginPage from './components/loginPage/LoginPage'
 import MainPage from './components/mainPage/MainPage';
 import ExplorePage from './components/mainPage/explorePage/ExplorePage';
+import ProfilePage from './components/mainPage/yourProfilePage/ProfilePage'
+import EditPage from './components/mainPage/yourProfilePage/EditPage';
 
 function App() {
   return (
@@ -23,7 +25,8 @@ function App() {
         />
         <Route path='/home' element={<MainPage/>}>
           <Route path='explore' element={<ExplorePage/>}/>
-          {/* <Route path='/profile' element/> */}
+          <Route path='profile' element={<ProfilePage/>}/>
+          <Route path='profile/edit' element={<EditPage/>}/>
           {/* <Route path='/matches' element/> */}
         </Route>
       </Routes>

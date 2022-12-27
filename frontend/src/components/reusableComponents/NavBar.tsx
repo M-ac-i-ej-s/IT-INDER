@@ -6,7 +6,7 @@ import {Link} from 'react-router-dom'
 function NavBar(props : {page: string}) {
   return (
    <div className='navbar__div'>
-        <Link className='link__home' to='/'>
+        <Link className='link__home' to={props.page === 'welcome' ? '/' : '/home/explore'}>
           <span className='name__span'>IT-INDER</span>
         </Link>
         {props.page === 'welcome' ? 
@@ -19,7 +19,7 @@ function NavBar(props : {page: string}) {
                 <Link className='link__home' to='/home/explore'>
                   <span className='name__span button'>EXPLORE</span>
                 </Link>  
-                <Link className='link__home' to='/profile'>
+                <Link className='link__home' to='/home/profile'>
                   <span className='name__span button'>PROFILE</span>
                 </Link>
                 <Link className='link__home' to='/matches'>

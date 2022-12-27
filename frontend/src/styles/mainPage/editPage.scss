@@ -1,0 +1,37 @@
+.buttonsGroup__div {
+    text-align: center;
+    margin-top: 50px;
+    Button {
+        width: 80px;
+        margin: 40px;
+    }
+}
+.tile__block.edit {
+    margin-top: 0px;
+}
+.popup__box {
+    position: absolute;
+    pointer-events: none;
+    width: 300px;
+    background-color: white;
+    border-radius: 20px;
+    padding: 20px;
+    left: 50%;
+    bottom: 520px;
+    opacity: 0.9;
+    transition: 1s ease-in-out;
+    -webkit-box-shadow: 8px 8px 24px 0px rgba(66, 68, 90, 1);
+    -moz-box-shadow: 8px 8px 24px 0px rgba(66, 68, 90, 1);
+    box-shadow: 8px 8px 24px 0px rgba(66, 68, 90, 1);
+}
+.description__box {
+    text-align: center;
+
+}
+.edit__box {
+    text-align: center;
+    .safe__button {
+        width: 100px;
+        margin-right: 200px;
+    }
+}
