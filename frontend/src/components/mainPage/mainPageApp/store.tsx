@@ -1,9 +1,11 @@
 import { configureStore } from '@reduxjs/toolkit';
 import exploreReducer from '../explorePage/exploreSlice';
+import profileReducer from '../yourProfilePage/profileSlice';
 
 export const store = configureStore({
   reducer: {
     explore: exploreReducer,
+    profile: profileReducer,
   },
 });
 

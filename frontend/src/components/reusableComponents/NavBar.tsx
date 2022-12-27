@@ -6,7 +6,7 @@ import {Link} from 'react-router-dom'
 function NavBar(props : {page: string}) {
   return (
    <div className='navbar__div'>
-        <Link className='link__home' to='/'>
+        <Link className='link__home' to={props.page === 'welcome' ? '/' : '/home/explore'}>
           <span className='name__span'>IT-INDER</span>
         </Link>
         {props.page === 'welcome' ? 
