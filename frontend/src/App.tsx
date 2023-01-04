@@ -10,6 +10,7 @@ import MainPage from './components/mainPage/MainPage';
 import ExplorePage from './components/mainPage/explorePage/ExplorePage';
 import ProfilePage from './components/mainPage/yourProfilePage/ProfilePage'
 import EditPage from './components/mainPage/yourProfilePage/EditPage';
+import MatchesPage from './components/mainPage/matchesPage/MatchesPage';
 
 function App() {
   return (
@@ -27,7 +28,7 @@ function App() {
           <Route path='explore' element={<ExplorePage/>}/>
           <Route path='profile' element={<ProfilePage/>}/>
           <Route path='profile/edit' element={<EditPage/>}/>
-          {/* <Route path='/matches' element/> */}
+          <Route path='matches' element={<MatchesPage/>}/>
         </Route>
       </Routes>
   </Router>

@@ -25,10 +25,10 @@ const initialState: stateType = {
             description:'You got a paiy but you cant sleep at night Car alarm going off outside',
             likes:[],
             dislikes:[],
-            matches:[],
+            matches:['7','5'], // id's of projects we have match with 
             email:'abcde@gmail.com',
             password:'somepass' 
-        },
+    },
 } 
 
 export const profileSlice = createSlice({

@@ -1,0 +1,21 @@
+.chat_list__div {
+    height: 400px;
+    width: 200px;
+    border: 1px solid gray;
+    padding: 20px 30px 20px 30px;
+    border-radius: 20px;
+    -webkit-box-shadow: 8px 8px 24px 0px rgba(66, 68, 90, 1);
+    -moz-box-shadow: 8px 8px 24px 0px rgba(66, 68, 90, 1);
+    box-shadow: 8px 8px 24px 0px rgba(66, 68, 90, 1);
+    .chat_match__div {
+        padding: 10px;
+        border-radius: 20px;
+        width: 180px;
+        .name__span {
+            font-size: 25px;
+        }
+    }
+    .chat_match__div:hover {
+        background-color: rgb(0, 0, 0, 0.02);
+    }
+}
