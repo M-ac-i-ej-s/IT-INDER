@@ -1,12 +1,29 @@
-.sign__span {
+.sign__div {
     position: absolute;
+    display: flex;
+    justify-content: center;
     margin-left: auto;
     margin-right: auto;
-    margin-top: 320px;
-    color: rgb(57, 180, 46);
     left: 0;
     right: 0;
-    text-align: center;
-    font-size: 120px;
+    margin-top: 320px;
+    height: 240px;
+    width: 600px;
+    overflow: hidden;
     transition: 0.5s ease-in-out;
+    .sign__p {
+        position: absolute;
+        color: rgb(53, 181, 41);
+        font-weight: bold;
+        font-style: italic;
+        margin: 0;
+        line-height: 100px;
+        text-shadow: 2px 2px 4px black;
+        text-align: center;
+        font-size: 120px;
+        transition: 0.5s ease-in-out;
+    }
+    .sign__p.match {
+        margin-top: 100px;
+    }
 }
