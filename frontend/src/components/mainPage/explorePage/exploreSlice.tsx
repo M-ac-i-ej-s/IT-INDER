@@ -68,7 +68,7 @@ const initialState: stateType = {
             type:'project',
             name:'blog',
             description:'Packed out train like a tin of sardines Doors slide open but nobody leaves More pile in til you can t breathe',
-            likes:[],
+            likes:['7'],
             dislikes:[],
             matches:[],
             email:'zxcasd@gmail.com',
