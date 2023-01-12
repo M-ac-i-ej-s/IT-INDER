@@ -11,8 +11,9 @@ function ExplorePage() {
   const users = useAppSelector(state => state.explore.users);
   const user = useAppSelector(state => state.explore.user);
   const dispatch = useAppDispatch();
-  const [opacity, setOpacity] = useState(0);
+  const [matchStyle, setMatchStyle] = useState({left:'-3250px'});
   const [userTile, setUserTile] = useState(users[0]);
+  const [render, setRender] = useState(true)
 
   const nextFunction = (): void => {
     if(userTile === undefined){
@@ -28,14 +29,28 @@ function ExplorePage() {
     dispatch(LIKED(id));
     /* eslint-enable */
     if(userTile.likes.includes(user.id)){
-      setOpacity(1)
+      setRender(true)
+      setMatchStyle({left:'0px' })
+      document.documentElement.style.setProperty('--pointerEvents','auto')
+      document.documentElement.style.setProperty('--bodyColor','rgb(0, 0, 0, 0.5)' )
       setTimeout(() => {
-        setOpacity(0)
-      },750)
+        setMatchStyle({left:'3250px' })
+        document.documentElement.style.setProperty('--bodyColor','rgb(0, 0, 0, 0)' )
+        setTimeout(() => {
+          nextFunction()
+          document.documentElement.style.setProperty('--pointerEvents','none')
+          setRender(false)
+          setMatchStyle({ left:'-3250px'})
+          setTimeout(() => {
+            setRender(true)
+          },500)
+        },1000)
+      },2500)
+    } else {
+      nextFunction()
     }
-    nextFunction()
   }
-
+// correct version
   const dislikedFun = (id: string): void => {
     /* eslint-disable */
     /* @ts-ignore */
@@ -47,7 +62,12 @@ function ExplorePage() {
   return (
    <div className='center__block'>
       <Tile dislikeFun={dislikedFun} likeFun={likedFun} name={userTile ? userTile.name : ''} description={userTile ? userTile.description : ''} id={userTile ? userTile.id : ''}/>
-      <span style={{opacity: opacity}} className='sign__span'>IT&apos;S A MATCH !</span>
+      {render &&
+        <div style={matchStyle} className='sign__div'>
+          <p className='sign__p its'>IT&apos;S A</p>
+          <p className='sign__p match'>MATCH !</p>
+        </div>
+      }
    </div>
   );
 }

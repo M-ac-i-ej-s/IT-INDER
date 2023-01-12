@@ -22,7 +22,7 @@ function NavBar(props : {page: string}) {
                 <Link className='link__home' to='/home/profile'>
                   <span className='name__span button'>PROFILE</span>
                 </Link>
-                <Link className='link__home' to='/matches'>
+                <Link className='link__home' to='/home/matches'>
                   <span className='name__span button'>MATCHES</span>
                 </Link>
               </div>
