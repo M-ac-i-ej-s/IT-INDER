@@ -33,5 +33,14 @@
     .safe__button {
         width: 100px;
         margin-right: 200px;
+        margin-top: 20px;
+    }
+}
+
+.lang__div {
+    display: flex;
+    justify-content: center;
+    .lang__select {
+        width: 300px;
     }
 }

@@ -26,6 +26,12 @@ function ProfilePage() {
                     <span className='description__span'>
                     {user.description}
                     </span>
+                    <p className='what__span'>languages: </p>
+                    <span className='description__span'>
+                    {user.languages.map(el => {
+                            return <span key={el}>{el}</span>
+                    })}
+                    </span>
             </div>
         </div>
     </div>

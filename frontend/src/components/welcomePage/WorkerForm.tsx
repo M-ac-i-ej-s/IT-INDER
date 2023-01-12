@@ -1,4 +1,5 @@
 import React from 'react';
+import CreatableSelect from 'react-select/creatable';
 import '../../styles/welcomePage/workerForm.scss'
 import {  TextField, FormControl, OutlinedInput, InputAdornment, IconButton, Button } from '@mui/material';
 import Visibility from '@mui/icons-material/Visibility';
@@ -11,6 +12,22 @@ function WorkerForm() {
   const [showPassword, setShowPassword] = React.useState(false);
   const [borderError, setBorderError] = React.useState('white')
   const [infoHover, setInfoHover] = React.useState('0')
+  const [languages, setLanguages] = React.useState([])
+
+  const options = [
+    { value: 'javaScript', label: 'javaScript' },
+    { value: 'react', label: 'React' },
+    { value: 'angular', label: 'Angular' },
+    { value: 'vue', label: 'Vue' },
+    { value: 'java', label: 'Java' },
+    { value: 'python', label: 'Python' },
+    { value: 'c++', label: 'C++' },
+    { value: 'php', label: 'PHP' },
+    { value: 'sql', label: 'SQL' },
+    { value: 'go', label: 'GO' },
+    { value: 'c#', label: 'C#' },
+    { value: 'scala', label: 'Scala' },
+  ]
 
   const handleClickShowPassword = () => setShowPassword((show) => !show);
 
@@ -18,8 +35,12 @@ function WorkerForm() {
     event.preventDefault();
   };
 
+  const handleMultiChange = (e) => {
+    setLanguages(e)
+  }
+
   interface userProject {
-    projectName: string, 
+    name: string, 
     description: string,
     email: string,
     password: string,
@@ -43,22 +64,25 @@ function WorkerForm() {
 
   const formik = useFormik({
     initialValues: {
-      projectName: '',
+      name: '',
       description: '',
       email: '',
       password: '',
     },
     onSubmit: (values: userProject) => {
       if(!validateEmail(values.email)){
+        setBorderError('white')
         const id = uuidv4();
         const person = {
           id: id,
-          projectName: values.projectName,
+          name: values.name,
           description: values.description,
+          languages: languages.map(el => el.label),
           email: values.email,
           password: values.password,
         };
         console.log(person)
+        handleReset()
       } else {
         setBorderError('red')
       }
@@ -66,17 +90,18 @@ function WorkerForm() {
   });
 
   const handleReset = (): void => {
-    formik.values.projectName = ''
+    formik.values.name = ''
     formik.values.description = ''
     formik.values.email = ''
     formik.values.password = ''
+    setLanguages([])
   } 
 
   return (
    <div className='worker__div'>
         <form onSubmit={formik.handleSubmit} className='worker__form'>
           <FormControl color='primary' sx={{ width: '25ch', margin: '10px', backgroundColor:'white', borderRadius:'5px' }}>
-            <OutlinedInput id='projectName' name='projectName' value={formik.values.projectName} onChange={formik.handleChange} placeholder="Your name" />
+            <OutlinedInput id='name 1' name='name' value={formik.values.name} onChange={formik.handleChange} placeholder="Your name" />
           </FormControl>
           <div className='description__box'>
               <TextField
@@ -93,39 +118,43 @@ function WorkerForm() {
               />
               <InfoOutlinedIcon onMouseOver={handleMouseOver} onMouseOut={handleMouseOut} sx={{color: 'white', opacity: '0.6'}}/>
           </div>
-        <FormControl color='primary' sx={{ width: '30ch', margin: '10px', backgroundColor:'white', borderRadius:'5px',border: (borderError === 'white') ? 0 :`1px solid ${borderError}` }}>
+          { /* eslint-disable */ }
+          {/* @ts-ignore */}
+          <CreatableSelect className='lang__select' isMulti options={options} onChange={handleMultiChange} value={languages}/>;
+          { /* eslint-enable */ }
+          <FormControl color='primary' sx={{ width: '30ch', margin: '10px', backgroundColor:'white', borderRadius:'5px',border: (borderError === 'white') ? 0 :`1px solid ${borderError}` }}>
             <OutlinedInput id='email 2' name='email' value={formik.values.email} onChange={formik.handleChange} placeholder={(borderError === 'white') ? 'Email' : 'Invalid Email!'} />
-        </FormControl>
-        <FormControl color='primary' sx={{ width: '25ch', margin: '10px',backgroundColor:'white', borderRadius:'5px' }}>
-          <OutlinedInput
-              // id="outlined-adornment-password"
-              id='password 2'
-              name='password'
-              placeholder="Password"
-              type={showPassword ? 'text' : 'password'}
-              endAdornment={
-                <InputAdornment position="end">
-                  <IconButton
-                    aria-label="toggle password visibility"
-                    onClick={handleClickShowPassword}
-                    onMouseDown={handleMouseDownPassword}
-                    edge="end"
-                  >
-                    {showPassword ? <VisibilityOff /> : <Visibility />}
-                  </IconButton>
-                </InputAdornment>
-              }
-              value={formik.values.password} 
-              onChange={formik.handleChange}
-            />
-        </FormControl>
-        <Button type='submit' onClick={handleReset} sx={{width:'120px', margin: '10px'}} color="primary" variant="contained" size="large">Register</Button>
+          </FormControl>
+          <FormControl color='primary' sx={{ width: '25ch', margin: '10px',backgroundColor:'white', borderRadius:'5px' }}>
+            <OutlinedInput
+                // id="outlined-adornment-password"
+                id='password 2'
+                name='password'
+                placeholder="Password"
+                type={showPassword ? 'text' : 'password'}
+                endAdornment={
+                  <InputAdornment position="end">
+                    <IconButton
+                      aria-label="toggle password visibility"
+                      onClick={handleClickShowPassword}
+                      onMouseDown={handleMouseDownPassword}
+                      edge="end"
+                    >
+                      {showPassword ? <VisibilityOff /> : <Visibility />}
+                    </IconButton>
+                  </InputAdornment>
+                }
+                value={formik.values.password} 
+                onChange={formik.handleChange}
+              />
+          </FormControl>
+          <Button type='submit' sx={{width:'120px', margin: '10px'}} color="primary" variant="contained" size="large">Register</Button>
         </form>
-        <div className='popup__box' style={{opacity: infoHover}}>
+        <div className='popup__box1' style={{opacity: infoHover}}>
               <span>
-                Descriprion is where you will tell about the project.
-                Make sure to mention technologies you will be using, 
-                as well as expectations reagarding your future coworkers
+                Descriprion is where you will tell about yourself.
+                Make sure to mention technologies you&#x27;re finding most instresting, 
+                as well as expectations reagarding your future project
               </span>
         </div>
    </div>

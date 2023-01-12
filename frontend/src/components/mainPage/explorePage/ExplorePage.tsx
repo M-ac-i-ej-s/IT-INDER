@@ -61,7 +61,7 @@ function ExplorePage() {
 
   return (
    <div className='center__block'>
-      <Tile dislikeFun={dislikedFun} likeFun={likedFun} name={userTile ? userTile.name : ''} description={userTile ? userTile.description : ''} id={userTile ? userTile.id : ''}/>
+      <Tile dislikeFun={dislikedFun} likeFun={likedFun} name={userTile ? userTile.name : ''} description={userTile ? userTile.description : ''} languages={userTile ? userTile.languages : ['']} id={userTile ? userTile.id : ''}/>
       {render &&
         <div style={matchStyle} className='sign__div'>
           <p className='sign__p its'>IT&apos;S A</p>

@@ -9,6 +9,7 @@ interface stateType {
         type: string;
         name: string;
         description: string;
+        languages: string[];
         likes: string[];
         dislikes:string[];
         matches: string[];
@@ -20,6 +21,7 @@ interface stateType {
         type: string;
         name: string;
         description: string;
+        languages: string[];
         likes: string[];
         dislikes:string[];
         matches: string[];
@@ -34,6 +36,7 @@ const initialState: stateType = {
             type:'worker',
             name: 'Mateusz',
             description:'You got a paiy but you cant sleep at night Car alarm going off outside',
+            languages: ['JavaScript', 'Vue', 'Angualar'],
             likes:[],
             dislikes:[],
             matches:[],
@@ -46,6 +49,7 @@ const initialState: stateType = {
             type:'project',
             name:'roadMap',
             description:'Cause you re angry You re angry and you don t know why Yeah, you re angry You re angry and that s alright',
+            languages: ['JavaScript', 'Vue', 'Angualar'],
             likes:[],
             dislikes:[],
             matches:[],
@@ -57,6 +61,7 @@ const initialState: stateType = {
             type:'project',
             name:'Faq',
             description:'And if you re feeling a little murderous inside today They say crime don t pay, well neither do they And if you re feeling like nothing ever fucking goes your way They say crime don t pay, well neither do they',
+            languages: ['JavaScript', 'Vue', 'Angualar'],
             likes:['7'],
             dislikes:[],
             matches:[],
@@ -68,6 +73,7 @@ const initialState: stateType = {
             type:'project',
             name:'blog',
             description:'Packed out train like a tin of sardines Doors slide open but nobody leaves More pile in til you can t breathe',
+            languages: ['JavaScript', 'Vue', 'Angualar'],
             likes:['7'],
             dislikes:[],
             matches:[],

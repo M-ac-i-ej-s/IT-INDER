@@ -17,8 +17,13 @@
         .description__box {
             display: flex;
         }
+        .lang__select {
+            padding: 10px 10px 0px 10px;
+            width: 307px;
+            height: 35px;
+        }
     }
-    .popup__box {
+    .popup__box1 {
         position: absolute;
         pointer-events: none;
         width: 300px;
@@ -26,7 +31,7 @@
         border-radius: 20px;
         padding: 20px;
         right: 12%;
-        margin-top: 110px;
+        top: 1930px;
         opacity: 0.9;
         transition: 1s ease-in-out;
         -webkit-box-shadow: 8px 8px 24px 0px rgba(66, 68, 90, 1);
