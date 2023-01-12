@@ -11,7 +11,7 @@ function ExplorePage() {
   const users = useAppSelector(state => state.explore.users);
   const user = useAppSelector(state => state.explore.user);
   const dispatch = useAppDispatch();
-  const [matchStyle, setMatchStyle] = useState({left:'-3250px'});
+  const [matchStyle, setMatchStyle] = useState({left:'-2250px'});
   const [userTile, setUserTile] = useState(users[0]);
   const [render, setRender] = useState(true)
 
@@ -32,16 +32,11 @@ function ExplorePage() {
       setMatchStyle({left:'0px' })
       document.documentElement.style.setProperty('--bodyColor','rgb(0, 0, 0, 0.5)' )
       setTimeout(() => {
-        setMatchStyle({left:'3250px' })
-        document.documentElement.style.setProperty('--bodyColor','rgb(0, 0, 0, 0)' )
+        setMatchStyle({left:'2250px' })
+        document.documentElement.style.setProperty('--bodyColor','#fdfcfc' )
         setTimeout(() => {
-          setRender(false)
-          setMatchStyle({left:'-3250px'})
-          setTimeout(() => {
-             setRender(true)
-          },1000)
-          nextFunction()
-        }, 1000)
+          setMatchStyle({ left:'-2250px'})
+        }, 2000)
       },2500)
     } else {
       nextFunction()
