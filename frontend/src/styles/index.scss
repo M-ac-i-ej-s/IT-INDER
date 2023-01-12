@@ -1,5 +1,6 @@
 :root {
-  --bodyColor:"#fdfcfc";
+  --bodyColor:rgb(0, 0, 0, 0);
+  --displayBlock: none;
 }
 body {
   margin: 0;
@@ -9,8 +10,7 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background-color:  var(--bodyColor);
-  transition: 1s ease-in-out;
+  background-color:  rgb(253, 252, 252);
 }
 
 code {

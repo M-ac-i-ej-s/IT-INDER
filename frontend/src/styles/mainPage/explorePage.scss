@@ -6,14 +6,15 @@
     margin-right: auto;
     left: 0;
     right: 0;
-    margin-top: 320px;
+    margin-top: 260px;
     height: 240px;
     width: 600px;
     overflow: hidden;
-    transition: 0.5s ease-in-out;
+    transition: 1s ease-in-out;
+    z-index: 10;
     .sign__p {
         position: absolute;
-        color: rgb(53, 181, 41);
+        color: rgb(29, 235, 10);
         font-weight: bold;
         font-style: italic;
         margin: 0;
@@ -22,7 +23,6 @@
         text-align: center;
         font-size: 120px;
         transition: 0.5s ease-in-out;
-        z-index: 10;
     }
     .sign__p.match {
         margin-top: 100px;
