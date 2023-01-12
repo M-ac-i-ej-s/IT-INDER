@@ -47,7 +47,7 @@ function ExplorePage() {
       nextFunction()
     }
   }
-
+// correct version
   const dislikedFun = (id: string): void => {
     /* eslint-disable */
     /* @ts-ignore */
