@@ -5,7 +5,7 @@ import ThumbDownIcon from '@mui/icons-material/ThumbDown';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import PropTypes, {InferProps} from 'prop-types';
 
-function Tile({name, description, likeFun, dislikeFun, id}: InferProps<typeof Tile.propTypes>) {
+function Tile({name, description,languages, likeFun, dislikeFun, id}: InferProps<typeof Tile.propTypes>) {
     const [tileStyle, setTileStyle] = useState({transform:'', left:''})     
 
   return (
@@ -20,6 +20,12 @@ function Tile({name, description, likeFun, dislikeFun, id}: InferProps<typeof Ti
                 <span className='what__span'>Description: </span>
                 <span className='description__span'>
                 {description}
+                </span>
+                <p className='what__span'>languages: </p>
+                <span className='description__span'>
+                {languages.map(el => {
+                        return <span key={el}>{el}</span>
+                })}
                 </span>
             </div>
             : 
@@ -49,6 +55,7 @@ Tile.propTypes = {
     description: PropTypes.string,
     likeFun: PropTypes.func,
     dislikeFun: PropTypes.func,
+    languages: PropTypes.arrayOf(PropTypes.string),
     id: PropTypes.string
 }
 

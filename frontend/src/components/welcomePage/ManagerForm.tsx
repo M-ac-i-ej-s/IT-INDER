@@ -1,4 +1,5 @@
 import React from 'react';
+import CreatableSelect from 'react-select/creatable';
 import '../../styles/welcomePage/managerForm.scss'
 import {  TextField, FormControl, OutlinedInput, InputAdornment, IconButton, Button } from '@mui/material';
 import Visibility from '@mui/icons-material/Visibility';
@@ -11,12 +12,32 @@ function ManagerForm() {
   const [showPassword, setShowPassword] = React.useState(false);
   const [borderError, setBorderError] = React.useState('white')
   const [infoHover, setInfoHover] = React.useState('0')
+  const [languages, setLanguages] = React.useState([])
+
+  const options = [
+    { value: 'javaScript', label: 'javaScript' },
+    { value: 'react', label: 'React' },
+    { value: 'angular', label: 'Angular' },
+    { value: 'vue', label: 'Vue' },
+    { value: 'java', label: 'Java' },
+    { value: 'python', label: 'Python' },
+    { value: 'c++', label: 'C++' },
+    { value: 'php', label: 'PHP' },
+    { value: 'sql', label: 'SQL' },
+    { value: 'go', label: 'GO' },
+    { value: 'c#', label: 'C#' },
+    { value: 'scala', label: 'Scala' },
+  ]
 
   const handleClickShowPassword = () => setShowPassword((show) => !show);
 
   const handleMouseDownPassword = (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
   };
+
+  const handleMultiChange = (e) => {
+    setLanguages(e)
+  }
 
   interface user {
     name: string,
@@ -53,12 +74,14 @@ function ManagerForm() {
         const id = uuidv4();
         const person = {
           id: id,
-          projectName: values.name,
+          name: values.name,
           description: values.description,
+          languages: languages.map(el => el.label),
           email: values.email,
           password: values.password,
         };
         console.log(person)
+        handleReset()
       } else {
         setBorderError('red')
       }
@@ -70,6 +93,7 @@ function ManagerForm() {
     formik.values.description = ''
     formik.values.email = ''
     formik.values.password = ''
+    setLanguages([])
   } 
 
   return (
@@ -94,10 +118,14 @@ function ManagerForm() {
            />
            <InfoOutlinedIcon onMouseOver={handleMouseOver} onMouseOut={handleMouseOut} sx={{color: 'white', opacity: '0.6'}}/>
           </div>
-        <FormControl color='secondary' sx={{ width: '30ch', margin: '10px', backgroundColor:'white', borderRadius:'5px', border: (borderError === 'white') ? 0 :`1px solid ${borderError}` }}>
+          { /* eslint-disable */ }
+          {/* @ts-ignore */}
+          <CreatableSelect className='lang__select' isMulti options={options} onChange={handleMultiChange} value={languages}/>;
+          { /* eslint-enable */ }
+          <FormControl color='secondary' sx={{ width: '30ch', margin: '10px', backgroundColor:'white', borderRadius:'5px', border: (borderError === 'white') ? 0 :`1px solid ${borderError}` }}>
             <OutlinedInput id='email 1' name='email' value={formik.values.email} onChange={formik.handleChange} onBlur={formik.handleBlur} placeholder={(borderError === 'white') ? 'Email' : 'Invalid Email!'} />
-        </FormControl>
-        <FormControl color='secondary' sx={{ width: '25ch', margin: '10px',backgroundColor:'white', borderRadius:'5px' }}>
+          </FormControl>
+          <FormControl color='secondary' sx={{ width: '25ch', margin: '10px',backgroundColor:'white', borderRadius:'5px' }}>
           <OutlinedInput
               // id="outlined-adornment-password"
               id='password 1'
@@ -121,7 +149,7 @@ function ManagerForm() {
               onBlur={formik.handleBlur}
             />
         </FormControl>
-        <Button type='submit' sx={{width:'120px', margin: '10px'}} onClick={handleReset} color="secondary" variant="contained" size="large">Register</Button>
+        <Button type='submit' sx={{width:'120px', margin: '10px'}} color="secondary" variant="contained" size="large">Register</Button>
         </form>
         <div className='popup__box' style={{opacity: infoHover}}>
               <span>

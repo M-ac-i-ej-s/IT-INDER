@@ -9,6 +9,7 @@ interface stateType {
         type:string;
         name: string;
         description: string;
+        languages: string[];
         likes: string[];
         dislikes:string[];
         matches: string[];
@@ -23,6 +24,7 @@ const initialState: stateType = {
             type:'worker',
             name: 'Mateusz',
             description:'You got a paiy but you cant sleep at night Car alarm going off outside',
+            languages: ['JavaScript', 'Vue', 'Angualar'],
             likes:[],
             dislikes:[],
             matches:[],
