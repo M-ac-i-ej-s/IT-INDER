@@ -11,7 +11,7 @@ function ExplorePage() {
   const users = useAppSelector(state => state.explore.users);
   const user = useAppSelector(state => state.explore.user);
   const dispatch = useAppDispatch();
-  const [matchStyle, setMatchStyle] = useState({left:'-2250px'});
+  const [matchStyle, setMatchStyle] = useState({left:'-3250px'});
   const [userTile, setUserTile] = useState(users[0]);
   const [render, setRender] = useState(true)
 
@@ -29,14 +29,22 @@ function ExplorePage() {
     dispatch(LIKED(id));
     /* eslint-enable */
     if(userTile.likes.includes(user.id)){
+      setRender(true)
       setMatchStyle({left:'0px' })
+      document.documentElement.style.setProperty('--pointerEvents','auto')
       document.documentElement.style.setProperty('--bodyColor','rgb(0, 0, 0, 0.5)' )
       setTimeout(() => {
-        setMatchStyle({left:'2250px' })
-        document.documentElement.style.setProperty('--bodyColor','#fdfcfc' )
+        setMatchStyle({left:'3250px' })
+        document.documentElement.style.setProperty('--bodyColor','rgb(0, 0, 0, 0)' )
         setTimeout(() => {
-          setMatchStyle({ left:'-2250px'})
-        }, 2000)
+          nextFunction()
+          document.documentElement.style.setProperty('--pointerEvents','none')
+          setRender(false)
+          setMatchStyle({ left:'-3250px'})
+          setTimeout(() => {
+            setRender(true)
+          },500)
+        },1000)
       },2500)
     } else {
       nextFunction()
