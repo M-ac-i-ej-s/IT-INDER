@@ -49,9 +49,9 @@ export const Register = async (req, res) => {
                 name: req.body.name,
                 description: req.body.description,
                 languages: req.body.languages,
-                likes: req.body.likes,
-                dislikes: req.body.dislikes,
-                matches: req.body.matches,
+                likes: [],
+                dislikes: [],
+                matches: [],
                 email: req.body.email,
                 password: hashedPwd,
             });

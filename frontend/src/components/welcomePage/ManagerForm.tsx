@@ -6,13 +6,16 @@ import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
 import { useFormik } from 'formik';
-import { v4 as uuidv4 } from 'uuid';
+import { register } from '../../services/auth.service';
+import {useNavigate} from 'react-router-dom'
+import authHeader from '../../services/auth-header';
 
 function ManagerForm() {
   const [showPassword, setShowPassword] = React.useState(false);
   const [borderError, setBorderError] = React.useState('white')
   const [infoHover, setInfoHover] = React.useState('0')
   const [languages, setLanguages] = React.useState([])
+  const navigate = useNavigate();
 
   const options = [
     { value: 'javaScript', label: 'javaScript' },
@@ -69,18 +72,17 @@ function ManagerForm() {
       email: '',
       password: '',
     },
-    onSubmit: (values: user) => {
+    onSubmit: (values: user, { setSubmitting }) => {
       if(!validateEmail(values.email)){
-        const id = uuidv4();
-        const person = {
-          id: id,
-          name: values.name,
-          description: values.description,
-          languages: languages.map(el => el.label),
-          email: values.email,
-          password: values.password,
-        };
-        console.log(person)
+        register('project',values.name, values.description, languages.map(el => el.label), values.email, values.password)
+                .then(() => {
+                    navigate('/login');
+                    setSubmitting(false);
+                    authHeader();
+                })
+                .catch(() => {
+                    setBorderError('red')
+                });
         handleReset()
       } else {
         setBorderError('red')
