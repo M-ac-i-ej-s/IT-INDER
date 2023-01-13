@@ -83,10 +83,10 @@ function ManagerForm() {
                 .catch(() => {
                     setBorderError('red')
                 });
-        handleReset()
       } else {
         setBorderError('red')
       }
+      handleReset()
     },
   });
 

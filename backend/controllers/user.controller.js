@@ -3,7 +3,14 @@ import User from '../models/user.model.js';
 import bcrypt from 'bcrypt';
 
 export const getAllUsers = async (req, res) => {
-    await User.find()
+    const user = req.user;
+    let type = 'project'
+    if(user.type === 'project'){
+        type = 'programmer'
+    }
+    await User.aggregate([
+        {$match: {type:type, _id: {$not :{$in: [...user.likes, ...user.dislikes]}}}},
+        ])
         .then((allUsers) => {
             return res.status(200).json({
                 success: true,
