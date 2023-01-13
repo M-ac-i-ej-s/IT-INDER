@@ -83,10 +83,10 @@ function WorkerForm() {
                 .catch(() => {
                     setBorderError('red')
                 });
-        handleReset()
       } else {
         setBorderError('red')
       }
+      handleReset()
     },
   });
 
