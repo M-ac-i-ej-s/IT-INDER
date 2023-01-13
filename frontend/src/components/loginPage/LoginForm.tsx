@@ -3,12 +3,18 @@ import '../../styles/loginPage/loginForm.scss'
 import { FormControl, OutlinedInput, InputAdornment, IconButton, Button } from '@mui/material';
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
+import { LOGGEDIN } from './loginSlice';
+import { useDispatch } from 'react-redux';
+import { login } from '../../services/auth.service';
 import { useFormik } from 'formik';
-import {Link} from 'react-router-dom'
+import authHeader from '../../services/auth-header';
+import {useNavigate} from 'react-router-dom'
 
 function LoginForm() {
   const [showPassword, setShowPassword] = React.useState(false);
   const [borderError, setBorderError] = React.useState('white')
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   interface user {
     email: string,
@@ -34,9 +40,18 @@ function LoginForm() {
       email: '',
       password: '',
     },
-    onSubmit: (values: user) => {
+    onSubmit: (values: user, { setSubmitting }) => {
       if(!validateEmail(values.email)){
-        console.log(values.email)
+        login(values.email, values.password)
+                .then((response) => {
+                    dispatch(LOGGEDIN(response.User));
+                    navigate('/home/explore');
+                    setSubmitting(false);
+                    authHeader();
+                })
+                .catch(() => {
+                    setBorderError('red')
+        });
       } else {
         handleReset()
         setBorderError('red')
@@ -77,9 +92,7 @@ function LoginForm() {
                 onChange={formik.handleChange}
                 />
             </FormControl>
-            <Link className='link__login' to='/home/explore'>
-              <Button sx={{width: '100px' , margin: '10px', textDecoration: 'none'}} type='submit' color="secondary" variant="contained" size="large">Log in</Button>
-            </Link>
+            <Button sx={{width: '100px' , margin: '10px', textDecoration: 'none'}} type='submit' color="secondary" variant="contained" size="large">Log in</Button>
         </form>
    </div>
   );

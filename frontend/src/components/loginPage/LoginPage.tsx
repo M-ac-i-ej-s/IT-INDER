@@ -2,10 +2,12 @@ import React from 'react';
 import '../../styles/loginPage/loginPage.scss'
 import LoginForm from './LoginForm'
 import {Link} from 'react-router-dom'
+import {store} from './store';
+import { Provider } from 'react-redux';
 
 function LoginPage() {
   return (
-   <div>
+   <Provider store={store}>
         <div className='left__background'></div>
         <div className='right__background'></div>
 
@@ -15,7 +17,7 @@ function LoginPage() {
           </Link>
         </div>
         <LoginForm/>
-   </div>
+   </Provider>
   );
 }
 

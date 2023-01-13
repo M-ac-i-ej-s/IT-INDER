@@ -116,13 +116,7 @@ export const updateUserWithToken = async (req, res) => {
             await User.findByIdAndUpdate(
                 id,
                 {
-                    type: req.body.type,
                     name: req.body.name,
-                    description: req.body.description,
-                    languages: req.body.languages,
-                    likes: req.body.likes,
-                    dislikes: req.body.dislikes,
-                    matches: req.body.matches,
                     email: req.body.email,
                     password: hashedPwd
                 },
@@ -154,13 +148,7 @@ export const updateUserWithToken = async (req, res) => {
         await User.findByIdAndUpdate(
             id,
             {
-                type: req.body.type,
                 name: req.body.name,
-                description: req.body.description,
-                languages: req.body.languages,
-                likes: req.body.likes,
-                dislikes: req.body.dislikes,
-                matches: req.body.matches,
                 email: req.body.email,
             },
             { new: true }

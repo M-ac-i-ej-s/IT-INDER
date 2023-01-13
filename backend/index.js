@@ -1,4 +1,5 @@
 import userRouter from './routes/user.route.js';
+import authRouter from './routes/auth.route.js';
 
 import express from 'express';
 import bodyParser from 'body-parser';
@@ -11,7 +12,7 @@ const app = express();
 mongoose.set('strictQuery', false)
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
-const whitelist = ['http://localhost:3000'];
+const whitelist = ['http://localhost:3001','http://localhost:3000' ];
 const corsOptions = {
     credentials: true,
     origin: function (origin, callback) {
@@ -43,6 +44,7 @@ mongoose.connect(
 );
 
 app.use('/users', userRouter)
+app.use('/auth', authRouter);
 
 app.listen(process.env.PORT, () => {
     console.log(`Our server is running on port ${process.env.PORT}`);
