@@ -7,7 +7,7 @@ import { Provider } from 'react-redux';
 
 function LoginPage() {
   return (
-   <Provider store={store}>
+   <div>
         <div className='left__background'></div>
         <div className='right__background'></div>
 
@@ -17,7 +17,7 @@ function LoginPage() {
           </Link>
         </div>
         <LoginForm/>
-   </Provider>
+   </div>
   );
 }
 

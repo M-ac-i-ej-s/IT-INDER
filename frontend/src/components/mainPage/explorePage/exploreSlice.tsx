@@ -47,7 +47,7 @@ const initialState: stateType = {
         {
             id: '',
             type:'',
-            name:'',
+            name:'Loading',
             description:'',
             languages: [''],
             likes:[],

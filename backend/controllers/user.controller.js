@@ -27,19 +27,21 @@ export const getAllUsers = async (req, res) => {
           return el[0];
         });
     };
-    const user = req.body.user;
+    const userId = req.user;
+    const user = await User.find({_id: userId})
     let type = 'project'
-    if(user.type === 'project'){
+    if(user[0].type === 'project'){
         type = 'programmer'
     }
     await User.aggregate([
-        {$match: {type:type, _id: {$not :{$in: [...user.likes, ...user.dislikes]}}}},
+        // _id: {$not :{$in: [...user.likes, ...user.dislikes]}}
+        {$match: {type:type}},
         ])
         .then((allUsers) => {
             return res.status(200).json({
                 success: true,
                 message: 'All users',
-                Users: sortByLanguages(allUsers,user.languages),
+                Users: sortByLanguages(allUsers,user[0].languages),
             });
         })
         .catch((err) => {
