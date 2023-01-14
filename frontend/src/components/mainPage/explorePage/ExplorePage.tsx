@@ -10,7 +10,7 @@ import {
   LOADUSERS,
   SETUSER
 } from './exploreSlice';
-
+ 
 function ExplorePage() {
   const users = useAppSelector(state => state.explore.users);
   const user = useAppSelector(state => state.explore.user);
@@ -26,7 +26,7 @@ function ExplorePage() {
           })
           .then((response) => {
             const users = response.data.Users;
-            LOADUSERS(users);
+            dispatch(LOADUSERS(users));
           })
           .catch((error) => {
               console.log(error);
@@ -40,7 +40,7 @@ function ExplorePage() {
           })
           .then((response) => {
             const user = response.data.User;
-            SETUSER(user);
+            dispatch(SETUSER(user));
           })
           .catch((error) => {
               console.log(error);
@@ -99,12 +99,12 @@ function ExplorePage() {
   return (
    <div className='center__block'>
       <Tile dislikeFun={dislikedFun} likeFun={likedFun} name={userTile ? userTile.name : ''} description={userTile ? userTile.description : ''} languages={userTile ? userTile.languages : ['']} id={userTile ? userTile.id : ''}/>
-      {render &&
-        <div style={matchStyle} className='sign__div'>
-          <p className='sign__p its'>IT&apos;S A</p>
-          <p className='sign__p match'>MATCH !</p>
-        </div>
-      }
+        {render &&
+          <div style={matchStyle} className='sign__div'>
+            <p className='sign__p its'>IT&apos;S A</p>
+            <p className='sign__p match'>MATCH !</p>
+          </div>
+        }
    </div>
   );
 }
