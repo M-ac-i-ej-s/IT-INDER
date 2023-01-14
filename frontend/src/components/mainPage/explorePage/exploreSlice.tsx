@@ -4,82 +4,30 @@ import type { PayloadAction } from '@reduxjs/toolkit'
 /* eslint-enable */
 
 interface stateType {
-    user: {
-        id: string;
-        type: string;
-        name: string;
-        description: string;
-        languages: string[];
-        likes: string[];
-        dislikes:string[];
-        matches: string[];
-        email: string;
-        password: string;
-    };
-    users: {
-        id: string;
-        type: string;
-        name: string;
-        description: string;
-        languages: string[];
-        likes: string[];
-        dislikes:string[];
-        matches: string[];
-        email: string;
-        password: string;
-    }[];
+    matchStyle: {left : string},
+    render: boolean
 }
 
 const initialState: stateType = {
-    user: {
-            id: '',
-            type:'',
-            name: '',
-            description:'',
-            languages: [''],
-            likes:[],
-            dislikes:[],
-            matches:[],
-            email:'',
-            password:'' 
-        },
-    users: [
-        {
-            id: '',
-            type:'',
-            name:'Loading',
-            description:'',
-            languages: [''],
-            likes:[],
-            dislikes:[],
-            matches:[],
-            email:'',
-            password:''
-        },
-    ]
+    matchStyle: {left:'-3250px'},
+    render: true,
 } 
 
 export const exploreSlice = createSlice({
   name: 'explore',
   initialState,
   reducers: {
-    LIKED: (state: stateType, action: PayloadAction<string>) => {
-        state.user.likes.push(action.payload)
+    SETLEFT: (state: stateType, action: PayloadAction<string>) => {
+        state.matchStyle.left = action.payload
     },
-    DISLIKED: (state: stateType, action:PayloadAction<string>) => {
-        state.user.dislikes.push(action.payload)
-    },
-    LOADUSERS: (state, action) => {
-        state.users = action.payload
-    },
-    SETUSER: (state, action) => {
-        state.user = action.payload
+    SETRENDER: (state: stateType, action:PayloadAction<boolean>) => {
+        state.render = action.payload
     }
   },
 });
 
 // Action creators are generated for each case reducer function
-export const { LIKED, DISLIKED, LOADUSERS, SETUSER } =
+export const { SETLEFT, SETRENDER } =
   exploreSlice.actions;
 
 export default exploreSlice.reducer;

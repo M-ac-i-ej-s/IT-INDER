@@ -23,7 +23,7 @@ function Tile({name, description,languages, likeFun, dislikeFun, id}: InferProps
                 </span>
                 <p className='what__span'>languages: </p>
                 <span className='description__span'>
-                {languages.map(el => {
+                {languages && languages.map(el => {
                         return <span key={el}>{el}</span>
                 })}
                 </span>

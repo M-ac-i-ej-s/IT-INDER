@@ -34,11 +34,10 @@ export const getAllUsers = async (req, res) => {
         type = 'programmer'
     }
     await User.aggregate([
-        // _id: {$not :{$in: [...user.likes, ...user.dislikes]}}
-        {$match: {type:type}},
+        {$match: {type:type, _id: {$not :{$in: [...user[0].likes, ...user[0].dislikes]}}}},
         ])
         .then((allUsers) => {
-            return res.status(200).json({
+            res.status(200).json({
                 success: true,
                 message: 'All users',
                 Users: sortByLanguages(allUsers,user[0].languages),
@@ -54,8 +53,8 @@ export const getAllUsers = async (req, res) => {
 };
 
 export const getOneUser = async (req, res) => {
-    const user = req.user;
-    await User.find({_id: user._id})
+    const userId = req.user;
+    await User.find({_id: userId})
         .then((singleUser) => {
             res.status(200).json({
                 success: true,

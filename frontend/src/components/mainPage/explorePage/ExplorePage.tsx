@@ -5,19 +5,17 @@ import '../../../styles/mainPage/explorePage.scss'
 import authHeader from '../../../services/auth-header';
 import { useAppSelector, useAppDispatch } from '../mainPageApp/hooks'
 import {
-  LIKED,
-  DISLIKED,
-  LOADUSERS,
-  SETUSER
+  SETLEFT,
+  SETRENDER
 } from './exploreSlice';
  
 function ExplorePage() {
-  const users = useAppSelector(state => state.explore.users);
-  const user = useAppSelector(state => state.explore.user);
+  const matchStyle = useAppSelector(state => state.explore.matchStyle);
+  const render = useAppSelector(state => state.explore.render);
   const dispatch = useAppDispatch();
-  const [matchStyle, setMatchStyle] = useState({left:'-3250px'});
-  const [userTile, setUserTile] = useState(users[0]);
-  const [render, setRender] = useState(true)
+  const [users, setUsers] = useState([])
+  const [user, setUser] = useState({})
+  const [userTile, setUserTile] = useState({});
 
   const getAllUsers = async () => {
     await axios
@@ -26,7 +24,8 @@ function ExplorePage() {
           })
           .then((response) => {
             const users = response.data.Users;
-            dispatch(LOADUSERS(users));
+            setUsers(users);
+            setUserTile(users[0]);
           })
           .catch((error) => {
               console.log(error);
@@ -40,7 +39,7 @@ function ExplorePage() {
           })
           .then((response) => {
             const user = response.data.User;
-            dispatch(SETUSER(user));
+            setUser(user);
           })
           .catch((error) => {
               console.log(error);
@@ -63,23 +62,24 @@ function ExplorePage() {
   const likedFun = (id: string): void => {
     /* eslint-disable */
     /* @ts-ignore */
-    dispatch(LIKED(id));
-    /* eslint-enable */
+    // dispatch(LIKED(id));
+     /* @ts-ignore */
     if(userTile.likes.includes(user.id)){
-      setRender(true)
-      setMatchStyle({left:'0px' })
+      /* eslint-enable */
+      dispatch(SETRENDER(true))
+      dispatch(SETLEFT('0px'))
       document.documentElement.style.setProperty('--pointerEvents','auto')
       document.documentElement.style.setProperty('--bodyColor','rgb(0, 0, 0, 0.5)' )
       setTimeout(() => {
-        setMatchStyle({left:'3250px' })
+        dispatch(SETLEFT('3250px'))
         document.documentElement.style.setProperty('--bodyColor','rgb(0, 0, 0, 0)' )
         setTimeout(() => {
           nextFunction()
           document.documentElement.style.setProperty('--pointerEvents','none')
-          setRender(false)
-          setMatchStyle({ left:'-3250px'})
+          dispatch(SETRENDER(false))
+          dispatch(SETLEFT('-3250px'))
           setTimeout(() => {
-            setRender(true)
+            dispatch(SETRENDER(true))
           },500)
         },1000)
       },2500)
@@ -91,14 +91,17 @@ function ExplorePage() {
   const dislikedFun = (id: string): void => {
     /* eslint-disable */
     /* @ts-ignore */
-    dispatch(DISLIKED(id));
+    // dispatch(DISLIKED(id));
     /* eslint-enable */
     nextFunction()
   }
 
   return (
    <div className='center__block'>
+    { /* eslint-disable */ }
+    {/* @ts-ignore */}
       <Tile dislikeFun={dislikedFun} likeFun={likedFun} name={userTile ? userTile.name : ''} description={userTile ? userTile.description : ''} languages={userTile ? userTile.languages : ['']} id={userTile ? userTile.id : ''}/>
+      { /* eslint-enable */ }
         {render &&
           <div style={matchStyle} className='sign__div'>
             <p className='sign__p its'>IT&apos;S A</p>
