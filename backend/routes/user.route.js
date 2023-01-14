@@ -12,7 +12,7 @@ import {
 const userRouter = express.Router();
 
 userRouter.get('/', getAllUsers)
-userRouter.get('/:userId', getOneUser )
+userRouter.get('/you', getOneUser )
 userRouter.post('/new', createUser)
 userRouter.put('/:userId', upadateUser)
 userRouter.put('/tokenVerified', loggedIn, updateUserWithToken)

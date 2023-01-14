@@ -1,10 +1,14 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import Tile from './Tile'
+import axios from 'axios'
 import '../../../styles/mainPage/explorePage.scss'
+import authHeader from '../../../services/auth-header';
 import { useAppSelector, useAppDispatch } from '../mainPageApp/hooks'
 import {
   LIKED,
-  DISLIKED
+  DISLIKED,
+  LOADUSERS,
+  SETUSER
 } from './exploreSlice';
 
 function ExplorePage() {
@@ -14,6 +18,39 @@ function ExplorePage() {
   const [matchStyle, setMatchStyle] = useState({left:'-3250px'});
   const [userTile, setUserTile] = useState(users[0]);
   const [render, setRender] = useState(true)
+
+  const getAllUsers = async () => {
+    await axios
+          .get('http://localhost:3001/users/', {
+            headers: authHeader(),
+          })
+          .then((response) => {
+            const users = response.data.Users;
+            LOADUSERS(users);
+          })
+          .catch((error) => {
+              console.log(error);
+          });
+  }
+
+  const getUser = async () => {
+    await axios
+          .get('http://localhost:3001/users/you', {
+            headers: authHeader(),
+          })
+          .then((response) => {
+            const user = response.data.User;
+            SETUSER(user);
+          })
+          .catch((error) => {
+              console.log(error);
+          });
+  }
+
+  useEffect(() => {
+    getAllUsers();
+    getUser();
+  },[])
 
   const nextFunction = (): void => {
     if(userTile === undefined){

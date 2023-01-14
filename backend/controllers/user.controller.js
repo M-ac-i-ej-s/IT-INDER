@@ -3,7 +3,31 @@ import User from '../models/user.model.js';
 import bcrypt from 'bcrypt';
 
 export const getAllUsers = async (req, res) => {
-    const user = req.user;
+    const sortByLanguages = (users, pattern) => {
+        const newArr = users
+          .map((user) => {
+            let number = 0;
+            pattern.forEach((el1) => {
+              if (user.languages.includes(el1)) {
+                number += 1;
+              }
+            });
+            return [user, number];
+          })
+          .sort((a, b) => {
+            if (a[1] < b[1]) {
+              return 1;
+            }
+            if (a[1] > b[1]) {
+              return -1;
+            }
+            return 0;
+          });
+        return newArr.map((el) => {
+          return el[0];
+        });
+    };
+    const user = req.body.user;
     let type = 'project'
     if(user.type === 'project'){
         type = 'programmer'
@@ -15,7 +39,7 @@ export const getAllUsers = async (req, res) => {
             return res.status(200).json({
                 success: true,
                 message: 'All users',
-                User: allUsers,
+                Users: sortByLanguages(allUsers,user.languages),
             });
         })
         .catch((err) => {
@@ -28,8 +52,8 @@ export const getAllUsers = async (req, res) => {
 };
 
 export const getOneUser = async (req, res) => {
-    const id = req.params.userId;
-    await User.find({_id: id})
+    const user = req.user;
+    await User.find({_id: user._id})
         .then((singleUser) => {
             res.status(200).json({
                 success: true,
