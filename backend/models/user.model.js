@@ -9,6 +9,7 @@ const UserSchema = new mongoose.Schema(
         name: { type: String, required: true },
         description: {type: String, required: true},
         languages: {type: Array, require: true},
+        isActive: {type: String, default: ''},
         likes: {type: Array, default:[]},
         dislikes: {type: Array, default: []},
         matches: {type: Array, default: []},

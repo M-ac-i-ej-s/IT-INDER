@@ -6,15 +6,17 @@ import {
     getOneUser,
     updateUserWithToken,
     deleteUser,
-    upadateUser
+    userIsActive,
+    likeOrDislike
 } from '../controllers/user.controller.js';
 
 const userRouter = express.Router();
 
 userRouter.get('/',loggedIn, getAllUsers)
 userRouter.get('/you', loggedIn, getOneUser )
+userRouter.put('/active',loggedIn, userIsActive)
+userRouter.put('/decision', loggedIn, likeOrDislike)
 userRouter.post('/new', createUser)
-userRouter.put('/:userId', upadateUser)
 userRouter.put('/tokenVerified', loggedIn, updateUserWithToken)
 userRouter.delete('/:userId', deleteUser)
 

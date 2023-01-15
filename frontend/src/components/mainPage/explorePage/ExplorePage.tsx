@@ -13,7 +13,6 @@ function ExplorePage() {
   const matchStyle = useAppSelector(state => state.explore.matchStyle);
   const render = useAppSelector(state => state.explore.render);
   const dispatch = useAppDispatch();
-  const [users, setUsers] = useState([])
   const [user, setUser] = useState({})
   const [userTile, setUserTile] = useState({});
 
@@ -23,9 +22,54 @@ function ExplorePage() {
             headers: authHeader(),
           })
           .then((response) => {
-            const users = response.data.Users;
-            setUsers(users);
-            setUserTile(users[0]);
+            const user = response.data.Users;
+            setUserTile(user);
+            setTileUserActive(user._id)
+          })
+          .catch((error) => {
+              console.log(error);
+          });
+  }
+
+  const setTileUserActive = async (id) => {
+    await axios
+          .put('http://localhost:3001/users/active', 
+          {
+            id: id
+          },
+          {
+            headers: {
+              ...authHeader(),
+              'content-type': 'application/json',
+            },              
+          }
+          )
+          .then((response) => {
+            console.log(id)
+            console.log('is setted correctly')
+          })
+          .catch((error) => {
+              console.log(error);
+          });
+  }
+
+  const likeOrDislike = async (action, id) => {
+    await axios
+          .put(
+            'http://localhost:3001/users/decision',
+            {
+              action: action,
+              id: id
+            },
+            {
+              headers: {
+                ...authHeader(),
+                'content-type': 'application/json',
+              },              
+            }
+          )
+          .then((response) => {
+            console.log('action is complete')
           })
           .catch((error) => {
               console.log(error);
@@ -39,6 +83,7 @@ function ExplorePage() {
           })
           .then((response) => {
             const user = response.data.User;
+            console.log(user)
             setUser(user);
           })
           .catch((error) => {
@@ -47,24 +92,28 @@ function ExplorePage() {
   }
 
   useEffect(() => {
-    getAllUsers();
+    /* eslint-disable */
+     /* @ts-ignore */
+    getAllUsers()
+    /* eslint-enable */
     getUser();
   },[])
 
-  const nextFunction = (): void => {
-    if(userTile === undefined){
-      return 
-    }
-    const index = users.indexOf(userTile)
-    setUserTile(users[index+1])
+  const nextFunction = async () => {
+    /* eslint-disable */
+     /* @ts-ignore */
+     getAllUsers()
+     /* eslint-enable */
   }
 
   const likedFun = (id: string): void => {
     /* eslint-disable */
     /* @ts-ignore */
-    // dispatch(LIKED(id));
+    likeOrDislike('like', id)
      /* @ts-ignore */
-    if(userTile.likes.includes(user.id)){
+    if(userTile.likes.includes(user._id)){
+      /* @ts-ignore */
+      likeOrDislike('match', id)
       /* eslint-enable */
       dispatch(SETRENDER(true))
       dispatch(SETLEFT('0px'))
@@ -91,16 +140,15 @@ function ExplorePage() {
   const dislikedFun = (id: string): void => {
     /* eslint-disable */
     /* @ts-ignore */
-    // dispatch(DISLIKED(id));
+    likeOrDislike('dislike', id).then(() => nextFunction())
     /* eslint-enable */
-    nextFunction()
   }
 
   return (
    <div className='center__block'>
     { /* eslint-disable */ }
     {/* @ts-ignore */}
-      <Tile dislikeFun={dislikedFun} likeFun={likedFun} name={userTile ? userTile.name : ''} description={userTile ? userTile.description : ''} languages={userTile ? userTile.languages : ['']} id={userTile ? userTile.id : ''}/>
+      <Tile dislikeFun={dislikedFun} likeFun={likedFun} name={userTile ? userTile.name : ''} description={userTile ? userTile.description : ''} languages={userTile ? userTile.languages : ['']} id={userTile ? userTile._id : ''}/>
       { /* eslint-enable */ }
         {render &&
           <div style={matchStyle} className='sign__div'>
