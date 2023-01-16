@@ -37,7 +37,7 @@ function Tile({name, description,languages, likeFun, dislikeFun, id}: InferProps
         <div className='buttons__div'>
             { /* eslint-disable */ }
             {/* @ts-ignore */}
-            <IconButton onClick={() => dislikeFun(id)} onMouseEnter={() => setTileStyle({transform:'rotate(-10deg)', left: '-200px'})} onMouseLeave={() => setTileStyle({transform:'', left: ''})} sx={{color: '#d93416'}}>
+            <IconButton onClick={() => dislikeFun('dislike',id)} onMouseEnter={() => setTileStyle({transform:'rotate(-10deg)', left: '-200px'})} onMouseLeave={() => setTileStyle({transform:'', left: ''})} sx={{color: '#d93416'}}>
                 <ThumbDownIcon sx={{fontSize: '60px'}}/>
             </IconButton>
             {/* @ts-ignore */}

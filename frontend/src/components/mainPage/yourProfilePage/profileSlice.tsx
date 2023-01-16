@@ -3,48 +3,31 @@ import { createSlice } from '@reduxjs/toolkit';
 import type { PayloadAction } from '@reduxjs/toolkit'
 /* eslint-enable */
 
-interface stateType {
-    user: {
-        id: string;
-        type:string;
-        name: string;
-        description: string;
-        languages: string[];
-        likes: string[];
-        dislikes:string[];
-        matches: string[];
-        email: string;
-        password: string;
-    };
-}
 
-const initialState: stateType = {
-    user: {
-            id: '7',
-            type:'worker',
-            name: 'Mateusz',
-            description:'You got a paiy but you cant sleep at night Car alarm going off outside',
-            languages: ['JavaScript', 'Vue', 'Angualar'],
-            likes:[],
-            dislikes:[],
-            matches:[],
-            email:'abcde@gmail.com',
-            password:'somepass' 
-        },
+const initialState = {
+    languages: [{value: '', label: ''}],
+    description:'',
+    name:''
 } 
 
 export const profileSlice = createSlice({
   name: 'profile',
   initialState,
   reducers: {
-    UPDATE: (state: stateType, action: PayloadAction<string>) => {
-        state.user.description = action.payload
+    SETLANGUAGES: (state, action: PayloadAction<any>) => {
+      state.languages = action.payload
+    },
+    SETDESCRIPTION: (state, action: PayloadAction<string>) => {
+      state.description = action.payload
+    },
+    SETNAME: (state, action: PayloadAction<string>) => {
+      state.name = action.payload
     },
   },
 });
 
 // Action creators are generated for each case reducer function
-export const { UPDATE } =
+export const { SETDESCRIPTION, SETLANGUAGES, SETNAME } =
   profileSlice.actions;
 
 export default profileSlice.reducer;
