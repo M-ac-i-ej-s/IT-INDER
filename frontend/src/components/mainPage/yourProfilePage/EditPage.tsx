@@ -1,21 +1,25 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import CreatableSelect from 'react-select/creatable';
 import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
 import {  TextField, Button } from '@mui/material';
 import { useAppSelector, useAppDispatch } from '../mainPageApp/hooks'
 import { useFormik } from 'formik';
+import authHeader from '../../../services/auth-header';
+import axios from 'axios'
 import {
-  UPDATE
+  SETLANGUAGES,
 } from './profileSlice';
 import '../../../styles/mainPage/editPage.scss'
 import '../../../styles/welcomePage/managerForm.scss'
 
 function EditPage() {
-  const user = useAppSelector(state => state.profile.user);
+  const languages = useAppSelector(state => state.profile.languages);
+  const description = useAppSelector(state => state.profile.description);
+  const name = useAppSelector(state => state.profile.name);
   const dispatch = useAppDispatch();
   const [show, setShow] = useState(true)
-  const [infoHover, setInfoHover] = React.useState('0')
-  const [languages, setLanguages] = React.useState(user.languages.map(el => { return {value: el, label: el} }))
+  const [infoHover, setInfoHover] = useState('0')
+
 
   const options = [
     { value: 'javaScript', label: 'javaScript' },
@@ -41,16 +45,41 @@ function EditPage() {
   };
 
   const handleMultiChange = (e) => {
-    setLanguages(e)
+    console.log(e)
+    dispatch(SETLANGUAGES(e))
+  }
+
+  const edit = async (languages, description) => {
+    await axios
+          .put(
+            'http://localhost:3001/users/edit',
+            {
+              languages: languages,
+              description: description
+            },
+            {
+              headers: {
+                ...authHeader(),
+                'content-type': 'application/json',
+              },              
+            }
+          )
+          .then((response) => {
+            console.log('user is updated')
+          })
+          .catch((error) => {
+              console.log(error);
+          });
   }
 
   const formik = useFormik({
     initialValues: {
-      description: user.description,
+      description: description,
     },
-    onSubmit: (value: {description: string}) => {
-      console.log(value.description)
-      dispatch(UPDATE(value.description))
+    onSubmit: (value) => {
+      /* eslint-disable */
+     /* @ts-ignore */
+      edit(languages.map(el => { return el.value }), value.description)
     },
   });
 
@@ -63,7 +92,7 @@ function EditPage() {
       <div style={{display: show ? 'none' : 'block'}} className='tile__block edit'>
         <div>
           <span className='what__span'>Name: </span>
-          <span className='name__span'>{user.name}</span>
+          <span className='name__span'>{name}</span>
         </div>
           <span className='what__span'>Description: </span>
           <span className='description__span'>

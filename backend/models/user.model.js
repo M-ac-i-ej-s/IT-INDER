@@ -12,7 +12,6 @@ const UserSchema = new mongoose.Schema(
         isActive: {type: String, default: ''},
         likes: {type: Array, default:[]},
         dislikes: {type: Array, default: []},
-        matches: {type: Array, default: []},
         email: { type: String, required: true },
         password: { type: String, required: true },
     }

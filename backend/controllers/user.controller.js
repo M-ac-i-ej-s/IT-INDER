@@ -111,62 +111,30 @@ export const createUser = async (req, res) => {
     });
 };
 
-export const updateUserWithToken = async (req, res) => {
-    const id = req.user;
-    const token = req.header('access-token');
-    if (req.body.password && req.body.oldpassword) {
-            const hashedPwd = await bcrypt.hash(req.body.password, 10);
-            await User.findByIdAndUpdate(
-                id,
-                {
-                    description: req.body.description,
-                    languages: req.body.languages,
-                },
-                { new: true }
-            )
-                .then((user) => {
-                    res.status(200).json({
-                        success: true,
-                        message: 'User is updated',
-                        User: {
-                            user: user,
-                            token: token,
-                        },
-                    });
-                })
-                .catch((err) => {
-                    res.status(500).json({
-                        success: false,
-                        message: 'Server error. Please try again.',
-                    });
-                });
-    } else {
-        await User.findByIdAndUpdate(
-            id,
-            {
-                description: req.body.description,
-                languages: req.body.languages,
-            },
-            { new: true }
-        )
-            .then((user) => {
-                res.status(200).json({
-                    success: true,
-                    message: 'User is updated',
-                    User: {
-                        user: user,
-                        token: token,
-                    },
-                });
-            })
-            .catch((err) => {
-                res.status(500).json({
-                    success: false,
-                    message: 'Server error. Please try again.',
-                });
+export const editUser = async (req, res) => {
+    const userId = req.user;
+    await User.findByIdAndUpdate(
+        userId,
+        {
+            description: req.body.description,
+            languages: [...req.body.languages],
+        },
+        { new: true }
+    )
+        .then((user) => {
+            res.status(200).json({
+                success: true,
+                message: 'User is updated',
             });
-    }
+        })
+        .catch((err) => {
+            res.status(500).json({
+                success: false,
+                message: 'Server error. Please try again.',
+            });
+        });
 };
+
 
 export const userIsActive = async (req, res) => {
     const userId = req.user
@@ -191,78 +159,54 @@ export const userIsActive = async (req, res) => {
         });
 }
 
-export const likeOrDislike = async (req, res) => {
+export const like = async (req, res) => {
     const userId = req.user
     const id = req.body.id
-    const action = req.body.action
-    let likeOrDislike = 'like'
-    if(action === 'dislike'){
-        likeOrDislike = 'dislike'
-    } else if(action === 'match'){
-        likeOrDislike = 'match'
-    }
     const user = await User.find({_id: userId})
-    if(likeOrDislike === 'like'){
-        await User.findByIdAndUpdate(
-            userId,
-            {
-                likes: [...user[0].likes, id ]
-            },
-            { new: true }
+    await User.findByIdAndUpdate(
+        userId,
+        {
+            likes: [...user[0].likes, id ]
+        },
+        { new: true }
         )
-            .then((user) => {
-                res.status(200).json({
-                    success: true,
-                    message: 'User is liked',
-                });
-            })
-            .catch((err) => {
-                res.status(500).json({
-                    success: false,
-                    message: 'Server error. Please try again.',
-                });
+        .then((user) => {
+            res.status(200).json({
+                success: true,
+                message: 'User is liked',
             });
-    } else if(likeOrDislike === 'dislike') {
-        await User.findByIdAndUpdate(
-            userId,
-            {
-                dislikes: [...user[0].dislikes, id ]
-            },
-            { new: true }
+        })
+        .catch((err) => {
+            res.status(500).json({
+                success: false,
+                message: 'Server error. Please try again.',
+            });
+    });
+}
+
+export const dislike = async (req, res) => {
+    const userId = req.user
+    const id = req.body.id
+    const user = await User.find({_id: userId})
+    await User.findByIdAndUpdate(
+        userId,
+        {
+            dislikes: [...user[0].dislikes, id ]
+        },
+        { new: true }
         )
-            .then((user) => {
-                res.status(200).json({
-                    success: true,
-                    message: 'User is disliked',
-                });
-            })
-            .catch((err) => {
-                res.status(500).json({
-                    success: false,
-                    message: 'Server error. Please try again.',
-                });
+        .then((user) => {
+            res.status(200).json({
+                success: true,
+                message: 'User is disliked',
             });
-    } else if (likeOrDislike === 'match'){
-        await User.findByIdAndUpdate(
-            userId,
-            {
-                matches: [...user[0].matches, id ]
-            },
-            { new: true }
-        )
-            .then((user) => {
-                res.status(200).json({
-                    success: true,
-                    message: 'User is matched',
-                });
-            })
-            .catch((err) => {
-                res.status(500).json({
-                    success: false,
-                    message: 'Server error. Please try again.',
-                });
+        })
+        .catch((err) => {
+            res.status(500).json({
+                success: false,
+                message: 'Server error. Please try again.',
             });
-    }
+    });
 }
 
 export const deleteUser = async (req, res) => {

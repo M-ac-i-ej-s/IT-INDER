@@ -2,8 +2,6 @@ import React from 'react';
 import '../../styles/loginPage/loginPage.scss'
 import LoginForm from './LoginForm'
 import {Link} from 'react-router-dom'
-import {store} from './store';
-import { Provider } from 'react-redux';
 
 function LoginPage() {
   return (
