@@ -17,9 +17,9 @@ export const register = (type, name, description,languages,email, password ) => 
         });
 };
 
-export const login = (email, password) => {
+export const login = (email, password, params='') => {
     return axios
-        .post(API_URL + 'login', {
+        .post(API_URL + 'login' + params, {
             email,
             password,
         })

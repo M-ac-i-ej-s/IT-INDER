@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import NavBar from '../reusableComponents/NavBar';
 import LoginAsManager from './LoginAsManager';
 import SyncAltIcon from '@mui/icons-material/SyncAlt';
@@ -10,8 +10,43 @@ import WorkerDescription from './WorkerDescription';
 import Footer from './Footer';
 import '../../styles/welcomePage/arrows.scss'
 import Divider from '@mui/material/Divider';
+import {getCookie} from '../../services/cookie-fun'
+import { LOGGEDIN } from '../loginPage/loginSlice';
+import { useDispatch } from 'react-redux';
+import { login } from '../../services/auth.service';
+import {useNavigate} from 'react-router-dom'
+import authHeader from '../../services/auth-header';
+import axios from 'axios'
 
 function WelcomePage() {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const getUserById = async (id) => {
+    await axios
+            .get(`http://localhost:3001/users/${id}`)
+            .then((response) => {
+              const user = response.data.User;
+              login(user[0].email, user[0].password, '?cookie=true')
+                .then((response) => {
+                    dispatch(LOGGEDIN(response.User));
+                    navigate('/home/explore');
+                    authHeader();
+                })
+            })
+            .catch((error) => {
+                console.log(error);
+            });
+  }
+
+  useEffect(() => {
+    const id = getCookie('id')
+    console.log(id)
+    if(id !== ''){
+      getUserById(id)
+    }
+  },[])
+
   return (
    <div>
         <NavBar page='welcome'/>
