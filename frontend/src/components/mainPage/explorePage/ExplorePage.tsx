@@ -8,6 +8,7 @@ import {
   SETLEFT,
   SETRENDER
 } from './exploreSlice';
+import {setCookie} from '../../../services/cookie-fun'
  
 function ExplorePage() {
   const matchStyle = useAppSelector(state => state.explore.matchStyle);
@@ -44,6 +45,19 @@ function ExplorePage() {
             },              
           }
           )
+          .catch((error) => {
+              console.log(error);
+          });
+  }
+
+  const firstTime = async () => {
+    await axios
+          .put('http://localhost:3001/users/firstTime', {
+            headers:authHeader(),
+          })
+          .then(() => {
+            console.log('done')
+          })
           .catch((error) => {
               console.log(error);
           });
@@ -103,6 +117,7 @@ function ExplorePage() {
           .then((response) => {
             const user = response.data.User;
             setUser(user[0]);
+            setCookie('id',user[0]._id,7)
           })
           .catch((error) => {
               console.log(error);
@@ -148,7 +163,6 @@ function ExplorePage() {
       nextFunction()
     }
   }
-
 
   return (
    <div className='center__block'>

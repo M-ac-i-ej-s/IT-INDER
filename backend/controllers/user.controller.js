@@ -72,6 +72,25 @@ export const getOneUser = async (req, res) => {
         });
 };
 
+export const getUser = async (req, res) => {
+    const userId = req.params.id;
+    await User.find({_id: userId})
+        .then((singleUser) => {
+            res.status(200).json({
+                success: true,
+                message: 'Single User',
+                User: singleUser,
+            });
+        })
+        .catch((err) => {
+            res.status(500).json({
+                success: false,
+                message: 'This user does not exist',
+                error: err.message,
+            });
+        });
+};
+
 export const createUser = async (req, res) => {
     const hashedPwd = await bcrypt.hash(req.body.password, 10);
     User.find({ email: req.body.email }, (err, users) => {
@@ -85,6 +104,7 @@ export const createUser = async (req, res) => {
                 description: req.body.description,
                 languages: req.body.languages,
                 isActive: false,
+                firstTime:false,
                 likes: [],
                 dislikes: [],
                 matches: [],
@@ -135,6 +155,28 @@ export const editUser = async (req, res) => {
         });
 };
 
+export const firstTime = async (req, res) => {
+    const userId = req.user;
+    await User.findByIdAndUpdate(
+        userId,
+        {
+            firstTime:true,
+        },
+        { new: true }
+    )
+        .then((user) => {
+            res.status(200).json({
+                success: true,
+                message: 'User is updated',
+            });
+        })
+        .catch((err) => {
+            res.status(500).json({
+                success: false,
+                message: 'Server error. Please try again.',
+            });
+        });
+};
 
 export const userIsActive = async (req, res) => {
     const userId = req.user

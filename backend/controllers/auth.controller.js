@@ -7,6 +7,7 @@ const jwtSecret = toString(process.env.TOKEN_SECRET);
 
 export const Login = async (req, res) => {
     const email = req.body.email;
+    const cookie = req.query.cookie || false
     const user = await User.findOne({ email: email });
     if (user == null) {
         res.status(400).json({
@@ -14,7 +15,12 @@ export const Login = async (req, res) => {
             message: 'Email or password incorrect!',
         });
     } else {
-        const validate = await bcrypt.compare(req.body.password, user.password);
+        let validate
+        if(cookie === 'true'){
+            validate = (req.body.password === user.password)
+        } else {
+            validate = await bcrypt.compare(req.body.password, user.password);
+        }
         if (validate) {
             const token = createJWT(user);
             res.status(200).json({
@@ -49,6 +55,8 @@ export const Register = async (req, res) => {
                 name: req.body.name,
                 description: req.body.description,
                 languages: req.body.languages,
+                isActive:'',
+                cookieConsent:false,
                 likes: [],
                 dislikes: [],
                 matches: [],

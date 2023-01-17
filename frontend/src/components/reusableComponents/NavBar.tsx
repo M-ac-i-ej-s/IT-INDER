@@ -2,8 +2,14 @@ import React from 'react';
 import '../../styles/reusableComponents/navbar.scss'
 import Button from '@mui/material/Button';
 import {Link} from 'react-router-dom'
+import {deleteCookie} from '../../services/cookie-fun'
 
 function NavBar(props : {page: string}) {
+
+  const delCookie = () => {
+    deleteCookie('id')
+  }
+
   return (
    <div className='navbar__div'>
         <Link className='link__home' to={props.page === 'welcome' ? '/' : '/home/explore'}>
@@ -27,7 +33,7 @@ function NavBar(props : {page: string}) {
                 </Link>
               </div>
               <Link className='link__home' to='/'>
-                <Button color="error" variant="contained" size="large">Log Out</Button>
+                <Button onClick={delCookie} color="error" variant="contained" size="large">Log Out</Button>
               </Link>
             </div>
         }
