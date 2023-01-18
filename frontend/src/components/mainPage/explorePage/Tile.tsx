@@ -1,17 +1,18 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import '../../../styles/mainPage/tile.scss'
 import IconButton from '@mui/material/IconButton';
 import ThumbDownIcon from '@mui/icons-material/ThumbDown';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import PropTypes, {InferProps} from 'prop-types';
+import Loader from '../../reusableComponents/Loader'
 
-function Tile({name, description,languages, likeFun, dislikeFun, id}: InferProps<typeof Tile.propTypes>) {
+function Tile({loading,name, description,languages, likeFun, dislikeFun, id}: InferProps<typeof Tile.propTypes>) {
     const [tileStyle, setTileStyle] = useState({transform:'', left:''})     
 
   return (
     <div>
         <div style={tileStyle} className='tile__block'>
-            {name !== '' ? 
+            {(name !== '' && loading) ? 
             <div>
                 <div>
                     <span className='what__span'>Name: </span>
@@ -28,10 +29,14 @@ function Tile({name, description,languages, likeFun, dislikeFun, id}: InferProps
                 })}
                 </span>
             </div>
-            : 
+            : (loading && name=='') ?
             <span className='error__span'>
                 The list ended :&#40;
             </span>
+            : 
+            <div className='loader__div'>
+                <Loader/>
+            </div>
         }
         </div>
         <div className='buttons__div'>
@@ -51,6 +56,7 @@ function Tile({name, description,languages, likeFun, dislikeFun, id}: InferProps
 }
 
 Tile.propTypes = {
+    loading: PropTypes.bool,
     name: PropTypes.string,
     description: PropTypes.string,
     likeFun: PropTypes.func,

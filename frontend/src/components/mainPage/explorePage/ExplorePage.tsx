@@ -9,6 +9,7 @@ import {
   SETRENDER
 } from './exploreSlice';
 import {setCookie} from '../../../services/cookie-fun'
+import Loader from '../../reusableComponents/Loader'
  
 function ExplorePage() {
   const matchStyle = useAppSelector(state => state.explore.matchStyle);
@@ -16,6 +17,7 @@ function ExplorePage() {
   const dispatch = useAppDispatch();
   const [user, setUser] = useState({})
   const [userTile, setUserTile] = useState({});
+  const [loading, setLoading] = useState(false)
 
   const getAllUsers = async () => {
     await axios
@@ -26,6 +28,7 @@ function ExplorePage() {
             const user = response.data.Users;
             setUserTile(user);
             setTileUserActive(user._id);
+            setLoading(true)
           })
           .catch((error) => {
               console.log(error);
@@ -167,8 +170,8 @@ function ExplorePage() {
   return (
    <div className='center__block'>
     { /* eslint-disable */ }
-    {/* @ts-ignore */}
-      <Tile dislikeFun={dislike} likeFun={like} name={userTile ? userTile.name : ''} description={userTile ? userTile.description : ''} languages={userTile ? userTile.languages : ['']} id={userTile ? userTile._id : ''}/>
+      {/* @ts-ignore */}
+      <Tile loading={loading} dislikeFun={dislike} likeFun={like} name={userTile ? userTile.name : ''} description={userTile ? userTile.description : ''} languages={userTile ? userTile.languages : ['']} id={userTile ? userTile._id : ''}/>
       { /* eslint-enable */ }
         {render &&
           <div style={matchStyle} className='sign__div'>
