@@ -28,6 +28,7 @@ function App() {
           <Route path='explore' element={<ExplorePage/>}/>
           <Route path='profile' element={<ProfilePage/>}/>
           <Route path='profile/edit' element={<EditPage/>}/>
+          <Route path='profile/settings' element={<EditPage/>}/>
           <Route path='matches' element={<MatchesPage/>}/>
         </Route>
       </Routes>

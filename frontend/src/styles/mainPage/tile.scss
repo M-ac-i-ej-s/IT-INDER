@@ -30,6 +30,18 @@
         overflow: auto;
         font-size: 20px;
     }
+    .loader__div {
+        display: flex;
+        justify-content: center;
+        margin-top: 150px;
+    }
+    .buttons_set__div {
+        position: absolute;
+        width: 450px;
+        display: flex;
+        justify-content: space-between;
+        margin-top: 400px;
+    }
 }
 .buttons__div {
    position: absolute;
