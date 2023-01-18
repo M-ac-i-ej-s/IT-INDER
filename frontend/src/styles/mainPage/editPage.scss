@@ -38,6 +38,7 @@
     width: 400px;
     padding: 60px 20px 60px 20px;
     border-radius: 20px;
+    height: 270px;
     -webkit-box-shadow: 8px 8px 24px 0px rgba(66, 68, 90, 1);
     -moz-box-shadow: 8px 8px 24px 0px rgba(66, 68, 90, 1);
     box-shadow: 8px 8px 24px 0px rgba(66, 68, 90, 1);
@@ -53,6 +54,9 @@
     justify-content: center;
     .lang__select {
         width: 300px;
+    }
+    .mySelect__value-container{
+        height: 70px;
     }
 }
 

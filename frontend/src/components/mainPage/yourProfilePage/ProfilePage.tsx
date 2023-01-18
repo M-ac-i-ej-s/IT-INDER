@@ -1,9 +1,10 @@
 import React, {useEffect, useState} from 'react';
 import EditIcon from '@mui/icons-material/Edit';
 import SettingsIcon from '@mui/icons-material/Settings';
+import QuestionMarkIcon from '@mui/icons-material/QuestionMark';
 import Fab from '@mui/material/Fab';
 import {Link} from 'react-router-dom'
-import { useAppSelector, useAppDispatch } from '../mainPageApp/hooks'
+import { useAppDispatch } from '../mainPageApp/hooks'
 import authHeader from '../../../services/auth-header';
 import '../../../styles/mainPage/tile.scss'
 import '../../../styles/mainPage/profilePage.scss'
@@ -19,6 +20,21 @@ function ProfilePage() {
   const dispatch = useAppDispatch();
   const [user, setUser] = useState({})
   const [loading, setLoading] = useState(false)
+
+  const options = [
+    { value: 'javascript', label: 'JavaScript' },
+    { value: 'react', label: 'React' },
+    { value: 'angularjs', label: 'Angular' },
+    { value: 'vuejs', label: 'Vue' },
+    { value: 'java', label: 'Java' },
+    { value: 'python', label: 'Python' },
+    { value: 'cplusplus', label: 'C++' },
+    { value: 'php', label: 'PHP' },
+    { value: 'mysql', label: 'SQL' },
+    { value: 'go', label: 'GO' }, // wordmark
+    { value: 'csharp', label: 'C#' },
+    { value: 'scala', label: 'Scala' },
+]
 
   const getUser = async () => {
     await axios
@@ -36,6 +52,21 @@ function ProfilePage() {
           .catch((error) => {
               console.log(error);
           });
+  }
+
+  const labelTovalue = (language) => {
+    let label = '';
+    options.forEach(el => {
+        if(language === el.label){
+            label = el.value
+        }
+    })
+    if(label === 'go'){
+        return <i className={`devicon-${label}-original-wordmark colored`}></i>
+    } else if (label === ''){
+      return <QuestionMarkIcon/>
+  }
+    return <i className={`devicon-${label}-plain colored`}></i>
   }
 
   useEffect(() => {
@@ -60,26 +91,29 @@ function ProfilePage() {
                 </Link>
               </div>
               <div>
-                  <div>
-                      <span className='what__span'>Name: </span>
-                      { /* eslint-disable */ }
-                      {/* @ts-ignore */}
-                      <span className='name__span'>{user.name}</span>
-                  </div>
-                      <span className='what__span'>Description: </span>
-                      <span className='description__span'>
-                      {/* @ts-ignore */}
-                      {user.description}
-                      </span>
-                      <p className='what__span'>languages: </p>
-                      <span className='description__span'>
-                      {/* @ts-ignore */}
-                      {user.languages && user.languages.map(el => {
-                              return <span key={el}>{el}</span>
-                      })}
-                      { /* eslint-enable */ }
-                      </span>
+                <div className='name__div'>
+                { /* eslint-disable */ }
+                    {/* @ts-ignore */}
+                    <span className='name__span'>{user.name}</span>
                 </div>
+                <div className='description__div'>
+                    <span className='description__span'>
+                      {/* @ts-ignore */}
+                    {user.description}
+                    </span>
+                </div>
+                <div className='languages__div'>
+                  {/* @ts-ignore */}
+                    {user.languages && user.languages.map(el => {
+                            return (
+                            <div key={el}>
+                                {labelTovalue(el)}
+                                <span className='language__span'>{el}</span>
+                            </div>
+                            )
+                    })}
+                </div>
+            </div>
               </div>  
             : 
             <div className='loader__div'>

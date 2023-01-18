@@ -161,7 +161,7 @@ export const resetUser = async (req, res) => {
         userId,
         {
             likes: [],
-            dislike:[]
+            dislikes:[]
         },
         { new: true }
     )
