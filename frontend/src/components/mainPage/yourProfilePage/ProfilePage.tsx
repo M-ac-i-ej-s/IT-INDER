@@ -49,7 +49,7 @@ function ProfilePage() {
             <div>
               <div className='buttons_set__div'>
                 <Link className='settings__button' to='settings'>
-                    <Fab className='edit__button' aria-label="edit" color='info'>
+                    <Fab className='edit__button' aria-label="settings" sx={{color:'grey'}}>
                         <SettingsIcon/>
                     </Fab>
                 </Link>

@@ -11,6 +11,7 @@ import ExplorePage from './components/mainPage/explorePage/ExplorePage';
 import ProfilePage from './components/mainPage/yourProfilePage/ProfilePage'
 import EditPage from './components/mainPage/yourProfilePage/EditPage';
 import MatchesPage from './components/mainPage/matchesPage/MatchesPage';
+import SettingsPage from './components/mainPage/yourProfilePage/SettingsPage';
 
 function App() {
   return (
@@ -28,7 +29,7 @@ function App() {
           <Route path='explore' element={<ExplorePage/>}/>
           <Route path='profile' element={<ProfilePage/>}/>
           <Route path='profile/edit' element={<EditPage/>}/>
-          <Route path='profile/settings' element={<EditPage/>}/>
+          <Route path='profile/settings' element={<SettingsPage/>}/>
           <Route path='matches' element={<MatchesPage/>}/>
         </Route>
       </Routes>
