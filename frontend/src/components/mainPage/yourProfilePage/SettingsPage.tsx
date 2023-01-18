@@ -141,7 +141,7 @@ function SettingsPage() {
                 <span className='head__span'>
                     Reset your profile
                 </span>
-                <span className='description__span'>
+                <span className='description_set_span'>
                     Reseting your profile will make all your choices go away.
                     Your Profile data will stay the same, only thing that will be 
                     reset is your likes, dislikes, matches. 
@@ -156,7 +156,7 @@ function SettingsPage() {
                 <span className='head__span'>
                     Download a copy of your personal data
                 </span>
-                <span className='description__span'>
+                <span className='description_set_span'>
                       At ITinder, we are committed to protecting your data and privacy 
                       as well as providing you access to the information you have provided us.
                       If you would like to get a copy of your personal data, just click this button.
@@ -171,7 +171,7 @@ function SettingsPage() {
                 <span className='head__span'>
                     Delete profile
                 </span>
-                <span className='description__span'>
+                <span className='description_set_span'>
                     This button will delete your profile permamently, no longer any of your 
                     data will be stored on our app.   
                 </span>

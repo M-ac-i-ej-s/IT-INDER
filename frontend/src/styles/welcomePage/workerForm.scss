@@ -19,8 +19,11 @@
         }
         .lang__select {
             padding: 10px 10px 0px 10px;
+            margin-bottom: 20px;
             width: 307px;
-            height: 35px;
+        }
+        .mySelect__value-container{
+            height: 38px;
         }
     }
     .popup__box1 {
@@ -31,7 +34,7 @@
         border-radius: 20px;
         padding: 20px;
         right: 12%;
-        top: 1930px;
+        top: 1990px;
         opacity: 0.9;
         transition: 1s ease-in-out;
         -webkit-box-shadow: 8px 8px 24px 0px rgba(66, 68, 90, 1);

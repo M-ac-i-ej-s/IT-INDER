@@ -5,6 +5,7 @@ import {  TextField, Button } from '@mui/material';
 import { useAppSelector, useAppDispatch } from '../mainPageApp/hooks'
 import { useFormik } from 'formik';
 import KeyboardReturnIcon from '@mui/icons-material/KeyboardReturn';
+import QuestionMarkIcon from '@mui/icons-material/QuestionMark';
 import Fab from '@mui/material/Fab';
 import {Link} from 'react-router-dom'
 import authHeader from '../../../services/auth-header';
@@ -16,7 +17,9 @@ import {
 } from './profileSlice';
 import '../../../styles/mainPage/editPage.scss'
 import '../../../styles/welcomePage/managerForm.scss'
+import '../../../styles/mainPage/tile.scss'
 import Loader from '../../reusableComponents/Loader';
+import Swal from 'sweetalert2'
 
 function EditPage() {
   const languages = useAppSelector(state => state.profile.languages);
@@ -50,19 +53,19 @@ function EditPage() {
   },[])
 
   const options = [
-    { value: 'javaScript', label: 'javaScript' },
+    { value: 'javascript', label: 'JavaScript' },
     { value: 'react', label: 'React' },
-    { value: 'angular', label: 'Angular' },
-    { value: 'vue', label: 'Vue' },
+    { value: 'angularjs', label: 'Angular' },
+    { value: 'vuejs', label: 'Vue' },
     { value: 'java', label: 'Java' },
     { value: 'python', label: 'Python' },
-    { value: 'c++', label: 'C++' },
+    { value: 'cplusplus', label: 'C++' },
     { value: 'php', label: 'PHP' },
-    { value: 'sql', label: 'SQL' },
-    { value: 'go', label: 'GO' },
-    { value: 'c#', label: 'C#' },
+    { value: 'mysql', label: 'SQL' },
+    { value: 'go', label: 'GO' }, 
+    { value: 'csharp', label: 'C#' },
     { value: 'scala', label: 'Scala' },
-  ]
+]
 
   const handleMouseOver = () => {
     setInfoHover('0.9');
@@ -92,12 +95,33 @@ function EditPage() {
               },              
             }
           )
-          .then((response) => {
+          .then(() => {
             console.log('user is updated')
+            Swal.fire({
+              icon: 'success',
+              title: 'You updated your profile!',
+              showConfirmButton: false,
+              timer: 1500
+            })
           })
           .catch((error) => {
               console.log(error);
           });
+  }
+
+  const labelTovalue = (language) => {
+    let label = '';
+    options.forEach(el => {
+        if(language === el.label){
+            label = el.value
+        }
+    })
+    if(label === 'go'){
+        return <i className={`devicon-${label}-original-wordmark colored`}></i>
+    } else if (label === ''){
+        return <QuestionMarkIcon/>
+    }
+    return <i className={`devicon-${label}-plain colored`}></i>
   }
 
   const formik = useFormik({
@@ -107,7 +131,7 @@ function EditPage() {
     onSubmit: (value) => {
       /* eslint-disable */
      /* @ts-ignore */
-      edit(languages.map(el => { return el.value }), value.description)
+      edit(languages.map(el => { return el.label }), value.description)
     },
   });
 
@@ -118,21 +142,27 @@ function EditPage() {
         <Button variant={show ? 'outlined' : 'contained'} onClick={() => setShow(!show)} color='secondary'>Preview</Button>
       </div>
       <div style={{display: show ? 'none' : 'block'}} className='tile__block edit'>
-                <div>
-              <span className='what__span'>Name: </span>
-              <span className='name__span'>{name}</span>
+        <div>
+            <div className='name__div'>
+                        <span className='name__span'>{name}</span>
             </div>
-              <span className='what__span'>Description: </span>
+            <div className='description__div'>
               <span className='description__span'>
                 {formik.values.description}
               </span>
-              <p className='what__span'>languages: </p>
-                    <span className='description__span'>
-                    {languages.map(el => {
-                            return <span key={el.value}>{el.label}</span>
-                    })}
-              </span>
             </div>
+            <div className='languages__div'>
+                {languages && languages.map(el => {
+                    return (
+                        <div key={el.value}>
+                            {labelTovalue(el.label)}
+                            <span className='language__span'>{el.label}</span>
+                        </div>
+                        )
+                    })}
+            </div>
+          </div>
+        </div>
         <div className='edit__box' style={{display: show ? 'block' : 'none'}}>
           {loading ?
           <form onSubmit={formik.handleSubmit}>
@@ -145,6 +175,7 @@ function EditPage() {
                 color='secondary'
                 multiline
                 rows={4}
+                inputProps={{ maxLength: 250 }}
                 value={formik.values.description} 
                 onChange={formik.handleChange}
                 onBlur={formik.handleBlur}
@@ -155,7 +186,7 @@ function EditPage() {
             { /* eslint-disable */ }
             <div className='lang__div'>
               {/* @ts-ignore */}
-              <CreatableSelect className='lang__select' isMulti options={options} onChange={handleMultiChange} value={languages}/>
+              <CreatableSelect classNamePrefix='mySelect' className='lang__select' isMulti options={options} onChange={handleMultiChange} value={languages} isOptionDisabled={() => languages.length >= 6}/>
             </div>
             { /* eslint-enable */ }
             <div className='popup__box' style={{opacity: infoHover}}>

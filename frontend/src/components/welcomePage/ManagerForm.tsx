@@ -18,17 +18,17 @@ function ManagerForm() {
   const navigate = useNavigate();
 
   const options = [
-    { value: 'javaScript', label: 'javaScript' },
+    { value: 'javascript', label: 'JavaScript' },
     { value: 'react', label: 'React' },
-    { value: 'angular', label: 'Angular' },
-    { value: 'vue', label: 'Vue' },
+    { value: 'angularjs', label: 'Angular' },
+    { value: 'vuejs', label: 'Vue' },
     { value: 'java', label: 'Java' },
     { value: 'python', label: 'Python' },
-    { value: 'c++', label: 'C++' },
+    { value: 'cplusplus', label: 'C++' },
     { value: 'php', label: 'PHP' },
-    { value: 'sql', label: 'SQL' },
-    { value: 'go', label: 'GO' },
-    { value: 'c#', label: 'C#' },
+    { value: 'mysql', label: 'SQL' },
+    { value: 'go', label: 'GO' }, // wordmark
+    { value: 'csharp', label: 'C#' },
     { value: 'scala', label: 'Scala' },
   ]
 
@@ -113,6 +113,7 @@ function ManagerForm() {
             color='secondary'
             multiline
             rows={4}
+            inputProps={{ maxLength: 250 }}
             value={formik.values.description} 
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
@@ -122,7 +123,7 @@ function ManagerForm() {
           </div>
           { /* eslint-disable */ }
           {/* @ts-ignore */}
-          <CreatableSelect className='lang__select' isMulti options={options} onChange={handleMultiChange} value={languages}/>;
+          <CreatableSelect classNamePrefix="mySelect" className='lang__select' isMulti options={options} onChange={handleMultiChange} value={languages} isOptionDisabled={() => languages.length >= 6}/>
           { /* eslint-enable */ }
           <FormControl color='secondary' sx={{ width: '30ch', margin: '10px', backgroundColor:'white', borderRadius:'5px', border: (borderError === 'white') ? 0 :`1px solid ${borderError}` }}>
             <OutlinedInput id='email 1' name='email' value={formik.values.email} onChange={formik.handleChange} onBlur={formik.handleBlur} placeholder={(borderError === 'white') ? 'Email' : 'Invalid Email!'} />
