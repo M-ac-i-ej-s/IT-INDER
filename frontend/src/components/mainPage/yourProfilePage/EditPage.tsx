@@ -4,13 +4,19 @@ import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
 import {  TextField, Button } from '@mui/material';
 import { useAppSelector, useAppDispatch } from '../mainPageApp/hooks'
 import { useFormik } from 'formik';
+import KeyboardReturnIcon from '@mui/icons-material/KeyboardReturn';
+import Fab from '@mui/material/Fab';
+import {Link} from 'react-router-dom'
 import authHeader from '../../../services/auth-header';
 import axios from 'axios'
 import {
   SETLANGUAGES,
+  SETDESCRIPTION,
+  SETNAME
 } from './profileSlice';
 import '../../../styles/mainPage/editPage.scss'
 import '../../../styles/welcomePage/managerForm.scss'
+import Loader from '../../reusableComponents/Loader';
 
 function EditPage() {
   const languages = useAppSelector(state => state.profile.languages);
@@ -19,7 +25,29 @@ function EditPage() {
   const dispatch = useAppDispatch();
   const [show, setShow] = useState(true)
   const [infoHover, setInfoHover] = useState('0')
+  const [loading, setLoading] = useState(false)
 
+  const getUser = async () => {
+    await axios
+          .get('http://localhost:3001/users/you', {
+            headers: authHeader(),
+          })
+          .then((response) => {
+            const user = response.data.User;
+            dispatch(SETLANGUAGES(user[0].languages.map(el => {return {value: el, label: el}})))
+            dispatch(SETDESCRIPTION(user[0].description))
+            formik.values.description = user[0].description
+            dispatch(SETNAME(user[0].name))
+            setLoading(true)
+          })
+          .catch((error) => {
+              console.log(error);
+          });
+  }
+
+  useEffect(() => {
+    getUser()
+  },[])
 
   const options = [
     { value: 'javaScript', label: 'javaScript' },
@@ -90,22 +118,23 @@ function EditPage() {
         <Button variant={show ? 'outlined' : 'contained'} onClick={() => setShow(!show)} color='secondary'>Preview</Button>
       </div>
       <div style={{display: show ? 'none' : 'block'}} className='tile__block edit'>
-        <div>
-          <span className='what__span'>Name: </span>
-          <span className='name__span'>{name}</span>
-        </div>
-          <span className='what__span'>Description: </span>
-          <span className='description__span'>
-            {formik.values.description}
-          </span>
-          <p className='what__span'>languages: </p>
-                <span className='description__span'>
-                {languages.map(el => {
-                        return <span key={el.value}>{el.label}</span>
-                })}
-          </span>
-        </div>
+                <div>
+              <span className='what__span'>Name: </span>
+              <span className='name__span'>{name}</span>
+            </div>
+              <span className='what__span'>Description: </span>
+              <span className='description__span'>
+                {formik.values.description}
+              </span>
+              <p className='what__span'>languages: </p>
+                    <span className='description__span'>
+                    {languages.map(el => {
+                            return <span key={el.value}>{el.label}</span>
+                    })}
+              </span>
+            </div>
         <div className='edit__box' style={{display: show ? 'block' : 'none'}}>
+          {loading ?
           <form onSubmit={formik.handleSubmit}>
             <div className='description__box'> 
                 <TextField
@@ -138,7 +167,14 @@ function EditPage() {
             </div>
             <Button type='submit' className='safe__button' variant='contained' color='secondary'>Safe</Button>
           </form>
+          : <Loader/>
+        }
         </div>
+        <Link className='goBack_edit__button' to='/home/profile'>
+          <Fab className='goBack_edit__button' aria-label="settings" sx={{color:'grey'}}>
+              <KeyboardReturnIcon/>
+          </Fab>
+        </Link>
     </div>
   );
 }

@@ -155,6 +155,30 @@ export const editUser = async (req, res) => {
         });
 };
 
+export const resetUser = async (req, res) => {
+    const userId = req.user;
+    await User.findByIdAndUpdate(
+        userId,
+        {
+            likes: [],
+            dislike:[]
+        },
+        { new: true }
+    )
+        .then((user) => {
+            res.status(200).json({
+                success: true,
+                message: 'User is updated',
+            });
+        })
+        .catch((err) => {
+            res.status(500).json({
+                success: false,
+                message: 'Server error. Please try again.',
+            });
+        });
+};
+
 export const firstTime = async (req, res) => {
     const userId = req.user;
     await User.findByIdAndUpdate(
@@ -252,8 +276,8 @@ export const dislike = async (req, res) => {
 }
 
 export const deleteUser = async (req, res) => {
-    const id = req.params.userId;
-    await User.findByIdAndRemove(id)
+    const userId = req.user;
+    await User.findByIdAndRemove(userId)
         .exec()
         .then(() =>
             res.status(204).json({

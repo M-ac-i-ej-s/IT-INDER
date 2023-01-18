@@ -10,7 +10,8 @@ import {
     dislike,
     editUser,
     firstTime,
-    getUser
+    getUser,
+    resetUser
 } from '../controllers/user.controller.js';
 
 const userRouter = express.Router();
@@ -22,8 +23,9 @@ userRouter.put('/active',loggedIn, userIsActive)
 userRouter.put('/like', loggedIn, like)
 userRouter.put('/dislike', loggedIn, dislike)
 userRouter.put('/edit', loggedIn, editUser)
+userRouter.put('/reset', loggedIn, resetUser)
 userRouter.put('/firstTime', loggedIn, firstTime)
 userRouter.post('/new', createUser)
-userRouter.delete('/:userId', deleteUser)
+userRouter.delete('/delete', loggedIn,deleteUser)
 
 export default userRouter;
