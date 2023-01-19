@@ -1,30 +1,47 @@
-import React from 'react'
+import React, {useEffect, useRef} from 'react'
 import '../../../styles/mainPage/chatBox.scss'
 import Fab from '@mui/material/Fab';
 import SendIcon from '@mui/icons-material/Send';
 import Message from './Message';
+import PropTypes, {InferProps} from 'prop-types';
 
-function ChatBox() {
+function ChatBox({messages, userId, handleMessage, messValue,handleSubmit}:InferProps<typeof ChatBox.propTypes>) {
+  const scrollRef = useRef()
+
+  useEffect(() => {
+     /* eslint-disable */
+     /* @ts-ignore */
+    scrollRef.current?.scrollIntoView({behavior: 'smooth'})
+      /* eslint-enable */
+  },[messages])
+
   return (
     <div className='chatBox__div'>
         <div className='messages__div'>
-            <Message isFrom={true}/>
-            <Message isFrom={false}/>
-            <Message isFrom={true}/>
-            <Message isFrom={false}/>
-            <Message isFrom={true}/>
-            <Message isFrom={false}/>
-            <Message isFrom={true}/>
-            <Message isFrom={false}/>
+            {messages.map((m, index) => {
+              return (
+                <div key={index} ref={scrollRef}>
+                  <Message message={m} isFrom={m.sender === userId}/>
+                </div>
+              )
+            })}
         </div>
         <div className='sending__div'>
-            <input type="text" className='chatMessage__input'/>
-            <Fab color='secondary' size='medium'>
+            <input onChange={handleMessage} type="text" className='chatMessage__input' value={messValue}/>
+            <Fab color='secondary' size='medium' onClick={handleSubmit}>
                 <SendIcon/>
             </Fab>
         </div>
     </div>
   )
+}
+
+ChatBox.propTypes = {
+  messages: PropTypes.array,
+  userId: PropTypes.string,
+  handleMessage: PropTypes.func,
+  messValue: PropTypes.string,
+  handleSubmit:PropTypes.func
 }
 
 export default ChatBox
