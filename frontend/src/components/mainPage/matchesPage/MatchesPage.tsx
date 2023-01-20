@@ -80,10 +80,9 @@ function MatchesPage() {
       /* @ts-ignore */
       conversationId: currentChat._id,
     }
-     /* @ts-ignore */
+    /* @ts-ignore */
     const receiverId = currentChat.members.find(member => member !== user._id)
     /* @ts-ignore */
- /* @ts-ignore */
     socket.current.emit('sendMessage', {
        /* @ts-ignore */
       senderId:user._id,
