@@ -28,3 +28,21 @@
         margin-top: 100px;
     }
 }
+.left__background {
+    position: absolute;
+    width: 50%;
+    height: 100vh;
+    background-color: #d059fc;
+    background-image: linear-gradient(72deg, rgba(208, 89, 252, 1) 0%, rgba(41, 53, 86, 1) 100%);
+    z-index: -1;
+}
+
+.right__background {
+    position: absolute;
+    left: 50%;
+    width: 50%;
+    height: 100vh;
+    background-color: #153250;
+    background-image: linear-gradient(120deg, rgba(21, 50, 80, 1) 0%, rgba(70, 70, 84, 1) 100%);
+    z-index: -1;
+}

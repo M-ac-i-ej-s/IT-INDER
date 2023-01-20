@@ -137,9 +137,13 @@ function EditPage() {
 
   return (
     <div>
+      <div className='left__background'></div>
+      <div className='right__background'></div>
       <div className='buttonsGroup__div'>
-        <Button variant={show ? 'contained' : 'outlined'} onClick={() => setShow(!show)} color='secondary'>Edit</Button>
-        <Button variant={show ? 'outlined' : 'contained'} onClick={() => setShow(!show)} color='secondary'>Preview</Button>
+        <div className='buttonsGroup_inside__div'>
+          <Button className='button__edit' variant={show ? 'contained' : 'outlined'} onClick={() => setShow(!show)} color='secondary'>Edit</Button>
+          <Button className='button__edit' variant={show ? 'outlined' : 'contained'} onClick={() => setShow(!show)} color='secondary'>Preview</Button>
+        </div>
       </div>
       <div style={{display: show ? 'none' : 'block'}} className='tile__block edit'>
         <div>

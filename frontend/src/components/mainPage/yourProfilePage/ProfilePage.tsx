@@ -75,6 +75,8 @@ function ProfilePage() {
 
   return (
     <div>
+      <div className='left__background'></div>
+      <div className='right__background'></div>
         <div className='tile__block'>
           {loading ? 
             <div>

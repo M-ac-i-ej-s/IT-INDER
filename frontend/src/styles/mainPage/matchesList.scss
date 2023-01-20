@@ -4,10 +4,12 @@
     border: 1px solid gray;
     padding: 20px 30px 20px 30px;
     border-radius: 20px;
+    background-color: white;
     -webkit-box-shadow: 8px 8px 24px 0px rgba(66, 68, 90, 1);
     -moz-box-shadow: 8px 8px 24px 0px rgba(66, 68, 90, 1);
     box-shadow: 8px 8px 24px 0px rgba(66, 68, 90, 1);
     .chat_match__div {
+        cursor: pointer;
         padding: 10px;
         border-radius: 20px;
         width: 180px;
@@ -16,6 +18,9 @@
         }
     }
     .chat_match__div:hover {
+        background-color: rgb(0, 0, 0, 0.02);
+    }
+    .chat_match__div:active {
         background-color: rgb(0, 0, 0, 0.02);
     }
 }
