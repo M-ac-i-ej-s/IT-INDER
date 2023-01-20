@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react'
 import MatchesList from './MatchesList'
 import ChatBox from './ChatBox'
+import Tile from '../explorePage/Tile'
 import axios from 'axios'
 import '../../../styles/mainPage/matchesPage.scss'
 import authHeader from '../../../services/auth-header'
@@ -8,10 +9,12 @@ import {io} from 'socket.io-client'
 
 function MatchesPage() {
   const [conversations, setConversations] = useState([])
+  const [receiver, setReceiver] = useState({})
   const [currentChat, setCurrentChat] = useState([])
   const [messages, setMessages] = useState([])
   const [newMessage, setNewMessage] = useState('')
   const [arrivalMessage, setArrivalMessage] = useState(null)
+  const [loading, setLoading] = useState(false)
   const socket = useRef()
   const [user, setUser] = useState({})
 
@@ -40,7 +43,10 @@ function MatchesPage() {
                             /* eslint-disable */
             setConversations(conversations)
              /* @ts-ignore */
-            setCurrentChat(conversations[0])
+            if(conversations.length > 0){
+              setCurrentChat(conversations[0])
+            }
+            setLoading(true)
           })
           .catch(err => {
             console.log(err)
@@ -54,12 +60,27 @@ function MatchesPage() {
       })
       .then(res => {
         const messages = res.data.messages
-        console.log(messages)
         setMessages(messages)
+        if(conversations.length > 0){
+            /* @ts-ignore */
+          getUserById(currentChat.members.find(member => member !== user._id))
+        }
       })
       .catch(err => {
         console.log(err)
       })
+  }
+
+  const getUserById = async (id) => {
+    await axios
+            .get(`http://localhost:3001/users/${id}`)
+            .then((response) => {
+              const user = response.data.User;
+              setReceiver(user[0])
+            })
+            .catch((error) => {
+                console.log(error);
+            });
   }
 
   const handleMessage = (e) => {
@@ -119,6 +140,7 @@ function MatchesPage() {
   useEffect(() => {
         /* @ts-ignore */
     getMessages(currentChat._id)
+     /* @ts-ignore */
   },[currentChat])
 
   const sockerInit = (id) => {
@@ -150,12 +172,13 @@ function MatchesPage() {
     <div className='matchPage__div'>
         {/* eslint-disable */}
       <div className='chat_list__div'>
-      {conversations && conversations.map(el => {
-        return (
-            <div key={el}>
-                {/* @ts-ignore */}
-                <MatchesList handleChatChange={handleChatChange} conversation={el} currentUserId={user._id}/>
-            </div>
+        {/* @ts-ignore */}
+            {conversations && conversations.map(el => {
+            return (
+              <div key={el}>
+                  {/* @ts-ignore */}
+                  <MatchesList handleChatChange={handleChatChange} conversation={el} currentUserId={user._id}/>
+              </div>
         )
       })}
       </div>
@@ -163,8 +186,12 @@ function MatchesPage() {
             /* @ts-ignore */
             <ChatBox messages={messages} userId={user._id} handleMessage={handleMessage} messValue={newMessage} handleSubmit={handleSubmit}/>
             :
-            <span>Open a conversation to start a chat</span>
+            <span>Dont have matches yet, go explore!</span>
         }
+         {receiver &&
+           /* @ts-ignore */
+          <Tile chat={true} loading={loading} name={receiver ? receiver.name : ''} description={receiver ? receiver.description : ''} languages={receiver ? receiver.languages : ['']}/>
+         }
         {/* eslint-enable */}
     </div>
     </>

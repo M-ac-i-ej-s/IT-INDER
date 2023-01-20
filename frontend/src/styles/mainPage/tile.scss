@@ -1,3 +1,6 @@
+.aboveTile__div {
+}
+
 .tile__block {
     position: absolute;
     margin-left: auto;
@@ -65,6 +68,14 @@
         justify-content: space-between;
         margin-top: 400px;
     }
+}
+.tile__block.chatShow {
+    padding: 10px;
+    margin-top: 0;
+    left: -46;
+    top: -46;
+    position: relative;
+    transform: scale(0.8);
 }
 .buttons__div {
    position: absolute;

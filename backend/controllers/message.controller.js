@@ -37,3 +37,17 @@ export const getMessage = async (req, res) => {
     });
     })
   }  
+
+  export const deleteMessages = async (req, res) => {
+    const userId = req.user
+    await Message.find({
+        sender: userId,
+      }).remove().exec()
+        .catch (err => { 
+        res.status(500).json({
+        success: false,
+        message: 'cant find conversation',
+        error: err.message
+    });
+    })
+  }  

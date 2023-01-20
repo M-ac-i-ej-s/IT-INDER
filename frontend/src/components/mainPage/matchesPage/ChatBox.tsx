@@ -17,7 +17,8 @@ function ChatBox({messages, userId, handleMessage, messValue,handleSubmit}:Infer
 
   return (
     <div className='chatBox__div'>
-        <div className='messages__div'>
+      <div className='message_center__div'>
+      <div className='messages__div'>
             {messages.map((m, index) => {
               return (
                 <div key={index} ref={scrollRef}>
@@ -26,8 +27,9 @@ function ChatBox({messages, userId, handleMessage, messValue,handleSubmit}:Infer
               )
             })}
         </div>
+      </div>
         <div className='sending__div'>
-            <input onChange={handleMessage} type="text" className='chatMessage__input' value={messValue}/>
+            <input onChange={handleMessage} type="text" className='chatMessage__input' value={messValue} placeholder='Aa'/>
             <Fab color='secondary' size='medium' onClick={handleSubmit}>
                 <SendIcon/>
             </Fab>
