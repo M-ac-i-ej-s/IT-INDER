@@ -1,5 +1,7 @@
 import userRouter from './routes/user.route.js';
 import authRouter from './routes/auth.route.js';
+import messageRouter from './routes/messages.route.js';
+import conversationRouter from './routes/conversation.route.js';
 
 import express from 'express';
 import bodyParser from 'body-parser';
@@ -45,6 +47,8 @@ mongoose.connect(
 
 app.use('/users', userRouter)
 app.use('/auth', authRouter);
+app.use('/messages', messageRouter);
+app.use('/conversations', conversationRouter);
 
 app.listen(process.env.PORT, () => {
     console.log(`Our server is running on port ${process.env.PORT}`);

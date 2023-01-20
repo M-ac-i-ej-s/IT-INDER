@@ -1,18 +1,23 @@
 import React from 'react'
 import PropTypes, {InferProps} from 'prop-types';
 import '../../../styles/mainPage/message.scss'
+import {format} from 'timeago.js'
 
-function Message({isFrom}: InferProps<typeof Message.propTypes>) {
+function Message({message,isFrom}: InferProps<typeof Message.propTypes>) {
+   {/* eslint-disable */}
   return (
-    <div className={isFrom ? 'messageFrom' : 'messageTo'}>
-      <span className='message_content__span'>this is a message</span>
-      <span className='message_date__span'>20-04-2022 17:04</span>
+    <div className={isFrom ? 'messageTo' : 'messageFrom'}>
+      {/* @ts-ignore */}
+      <span className='message_content__span'>{message.text}</span>
+      {/* @ts-ignore */}
+      <span className='message_date__span'>{format(message.createdAt)}</span>
     </div>
   )
 }
 
 Message.propTypes = {
-    isFrom:PropTypes.bool
+    isFrom:PropTypes.bool,
+    message: PropTypes.object
 }
 
 export default Message

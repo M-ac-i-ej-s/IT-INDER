@@ -66,6 +66,24 @@ function ExplorePage() {
           });
   }
 
+  const createConversation = async (id) => {
+    await axios
+          .post('http://localhost:3001/conversations/', 
+          {
+            receiverId: id
+          },
+          {
+            headers: {
+              ...authHeader(),
+              'content-type': 'application/json',
+            },              
+          }
+          )
+          .catch((error) => {
+              console.log(error);
+          });
+  }
+
   const like = async (id) => {
     await axios
           .put(
@@ -89,7 +107,7 @@ function ExplorePage() {
           });
   }
 
-  const dislike = async (action, id) => {
+  const dislike = async (id) => {
     await axios
           .put(
             'http://localhost:3001/users/dislike',
@@ -144,6 +162,8 @@ function ExplorePage() {
     console.log(user.likes) 
       /* @ts-ignore */
     if(userTile.likes.includes(user._id)){
+      /* @ts-ignore */
+      createConversation(userTile._id)
       /* eslint-enable */
       dispatch(SETRENDER(true))
       dispatch(SETLEFT('0px'))

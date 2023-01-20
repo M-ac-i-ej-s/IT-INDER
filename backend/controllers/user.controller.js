@@ -30,6 +30,7 @@ export const getAllUsers = async (req, res) => {
     const userId = req.user;
     const user = await User.find({_id: userId})
     let type = 'project'
+    console.log(user[0])
     if(user[0].type === 'project'){
         type = 'programmer'
     }
