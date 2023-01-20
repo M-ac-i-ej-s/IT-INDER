@@ -1,9 +1,10 @@
 .buttonsGroup__div {
     text-align: center;
-    margin-top: 50px;
-    Button {
-        width: 80px;
-        margin: 40px;
+    .buttonsGroup_inside__div{
+        .button__edit {
+            width: 80px;
+            margin: 40px;
+        }
     }
 }
 .tile__block.edit {
@@ -33,6 +34,7 @@
     position: absolute;
     margin-left: auto;
     margin-right: auto;
+    background-color: white;
     left: 0;
     right: 0;
     width: 400px;

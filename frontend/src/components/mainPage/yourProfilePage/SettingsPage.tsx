@@ -135,6 +135,8 @@ function SettingsPage() {
 
   return (
    <div>
+    <div className='left__background'></div>
+    <div className='right__background'></div>
     <div className='tile__block'>
         <div className='section__div'>
             <div className='text__div'>

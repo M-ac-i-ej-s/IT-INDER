@@ -189,6 +189,8 @@ function ExplorePage() {
 
   return (
    <div className='center__block'>
+       <div className='left__background'></div>
+       <div className='right__background'></div>
     { /* eslint-disable */ }
       {/* @ts-ignore */}
       <Tile loading={loading} dislikeFun={dislike} likeFun={like} name={userTile ? userTile.name : ''} description={userTile ? userTile.description : ''} languages={userTile ? userTile.languages : ['']} id={userTile ? userTile._id : ''}/>

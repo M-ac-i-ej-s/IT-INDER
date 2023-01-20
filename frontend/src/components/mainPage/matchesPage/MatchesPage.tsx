@@ -145,6 +145,9 @@ function MatchesPage() {
   },[arrivalMessage, currentChat])
      /* eslint-enable */
   return (
+    <>
+    <div className='left__background match'></div>
+    <div className='right__background match'></div>
     <div className='matchPage__div'>
         {/* eslint-disable */}
       <div className='chat_list__div'>
@@ -165,6 +168,7 @@ function MatchesPage() {
         }
         {/* eslint-enable */}
     </div>
+    </>
   )
 }
 
