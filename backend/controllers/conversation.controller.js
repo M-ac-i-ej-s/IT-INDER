@@ -41,3 +41,16 @@ export const getConversation = async (req, res) => {
     });
     })
 }
+
+export const deleteConversation = async (req, res) => {
+    const userId = req.user
+    await Conversation.find({members: { $in: [userId] }},
+        ).remove().exec()
+        .catch(err => {
+      res.status(500).json({
+        success: false,
+        message: 'Email or password incorrect!',
+        error: err.message
+    });
+    })
+}

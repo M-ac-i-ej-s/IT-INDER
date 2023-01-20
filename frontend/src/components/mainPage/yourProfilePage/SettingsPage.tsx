@@ -53,6 +53,38 @@ function SettingsPage() {
           });     
   }
 
+  const deleteConversations = async () => {
+    await axios
+          .delete(
+            'http://localhost:3001/conversations/delete',
+            {
+              headers: authHeader(),             
+            }
+          )
+          .then((response) => {
+            console.log('deleted')
+          })
+          .catch((error) => {
+              console.log(error);
+          });     
+  }
+
+  const deleteMessages = async () => {
+    await axios
+          .delete(
+            'http://localhost:3001/messages/delete',
+            {
+              headers: authHeader(),             
+            }
+          )
+          .then((response) => {
+            console.log('deleted')
+          })
+          .catch((error) => {
+              console.log(error);
+          });     
+  }
+
   const agreeToDelete = () => {
     Swal.fire({
         title: 'Are you sure?',
@@ -70,6 +102,8 @@ function SettingsPage() {
             'success'
           )
           deleteUser()
+          deleteConversations()
+          deleteMessages()
         }
       })
   }

@@ -8,7 +8,7 @@ import QuestionMarkIcon from '@mui/icons-material/QuestionMark';
 import SyncAltIcon from '@mui/icons-material/SyncAlt';
 import Loader from '../../reusableComponents/Loader'
 
-function Tile({loading,name, description,languages, likeFun, dislikeFun, id}: InferProps<typeof Tile.propTypes>) {
+function Tile({loading,name, description,languages, likeFun, dislikeFun, id, chat}: InferProps<typeof Tile.propTypes>) {
     const [tileStyle, setTileStyle] = useState({transform:'', left:''})     
 
     const options = [
@@ -42,8 +42,8 @@ function Tile({loading,name, description,languages, likeFun, dislikeFun, id}: In
     }
 
   return (
-    <div>
-        <div style={tileStyle} className='tile__block'>
+    <div className='aboveTile__div'>
+        <div style={tileStyle} className={'tile__block' + (chat ? ' chatShow' : '')}>
             {(name !== '' && loading) ? (
             <div>
                 <div className='name__div'>
@@ -75,19 +75,21 @@ function Tile({loading,name, description,languages, likeFun, dislikeFun, id}: In
             </div>
         }
         </div>
-        <div className='buttons__div'>
-            { /* eslint-disable */ }
-            {/* @ts-ignore */}
-            <IconButton className='icon__button' onClick={() => dislikeFun(id)} onMouseEnter={() => setTileStyle({transform:'rotate(-10deg)', left: '-200px'})} onMouseLeave={() => setTileStyle({transform:'', left: ''})} sx={{color: '#d93416'}}>
-                <ThumbDownIcon sx={{fontSize: '60px'}}/>
-            </IconButton>
-            <SyncAltIcon sx={{color:'rgb(94, 62, 121,0.9)',fontSize:'60px' }}/>
-            {/* @ts-ignore */}
-            <IconButton className='icon__button' onClick={() => likeFun(id)} onMouseEnter={() => setTileStyle({transform:'rotate(10deg)', left: '200px'})} onMouseLeave={() => setTileStyle({transform:'', left: ''})} sx={{color: '#3fcc59'}}>
-                <FavoriteIcon sx={{fontSize: '60px'}}/>
-            </IconButton>
-            { /* eslint-enable */ }
-        </div>
+        {!chat &&
+             <div className='buttons__div'>
+             { /* eslint-disable */ }
+             {/* @ts-ignore */}
+             <IconButton className='icon__button' onClick={() => dislikeFun(id)} onMouseEnter={() => setTileStyle({transform:'rotate(-10deg)', left: '-200px'})} onMouseLeave={() => setTileStyle({transform:'', left: ''})} sx={{color: '#d93416'}}>
+                 <ThumbDownIcon sx={{fontSize: '60px'}}/>
+             </IconButton>
+             <SyncAltIcon sx={{color:'rgb(94, 62, 121,0.9)',fontSize:'60px' }}/>
+             {/* @ts-ignore */}
+             <IconButton className='icon__button' onClick={() => likeFun(id)} onMouseEnter={() => setTileStyle({transform:'rotate(10deg)', left: '200px'})} onMouseLeave={() => setTileStyle({transform:'', left: ''})} sx={{color: '#3fcc59'}}>
+                 <FavoriteIcon sx={{fontSize: '60px'}}/>
+             </IconButton>
+             { /* eslint-enable */ }
+         </div>
+        }
     </div>
   );
 }
@@ -99,7 +101,8 @@ Tile.propTypes = {
     likeFun: PropTypes.func,
     dislikeFun: PropTypes.func,
     languages: PropTypes.arrayOf(PropTypes.string),
-    id: PropTypes.string
+    id: PropTypes.string,
+    chat:PropTypes.bool,
 }
 
 export default Tile;
