@@ -9,7 +9,6 @@ import {
   SETRENDER
 } from './exploreSlice';
 import {setCookie} from '../../../services/cookie-fun'
-import Loader from '../../reusableComponents/Loader'
  
 function ExplorePage() {
   const matchStyle = useAppSelector(state => state.explore.matchStyle);
@@ -26,8 +25,14 @@ function ExplorePage() {
           })
           .then((response) => {
             const user = response.data.Users;
-            setUserTile(user);
-            setTileUserActive(user._id);
+            if(user !== undefined) {
+              setUserTile(user);
+              setTileUserActive(user._id);
+            } else {
+              setUserTile({
+                name: '',
+              });
+            }
             setLoading(true)
           })
           .catch((error) => {
