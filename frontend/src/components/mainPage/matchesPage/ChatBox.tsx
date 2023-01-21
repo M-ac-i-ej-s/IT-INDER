@@ -38,7 +38,7 @@ function ChatBox({messages, userId, handleMessage, messValue,handleSubmit}:Infer
       }
         <div className='sending__div'>
             <input onChange={handleMessage} type="text" className='chatMessage__input' value={messValue} placeholder='Aa'/>
-            <Fab color='secondary' size='medium' onClick={handleSubmit}>
+            <Fab color='secondary' size='medium' onClick={handleSubmit} disabled={messValue.length > 0 ? false : true}>
                 <SendIcon/>
             </Fab>
         </div>

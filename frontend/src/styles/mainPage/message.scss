@@ -35,3 +35,19 @@
         font-weight: bold;
     }
 }
+.messageFrom.deleted {
+    .message_content__span {
+        background-color: rgb(95, 95, 95, 0.9);
+        background-image: none;
+        border: 2px solid black;
+        border-style: dashed;
+    }
+}
+.messageTo.deleted {
+    .message_content__span {
+        background-color: rgb(95, 95, 95, 0.9);
+        background-image: none;
+        border: 2px solid black;
+        border-style: dashed;
+    }
+}
