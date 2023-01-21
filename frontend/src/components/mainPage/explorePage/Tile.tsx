@@ -67,7 +67,7 @@ function Tile({loading,name, description,languages, likeFun, dislikeFun, id, cha
             </div>
             ): (loading && name=='') ?
             <span className='error__span'>
-                The list ended :&#40;
+                You Picked everyone we got! Wait for more users!
             </span>
             : 
             <div className='loader__div'>

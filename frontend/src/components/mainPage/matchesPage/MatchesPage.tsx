@@ -173,14 +173,16 @@ function MatchesPage() {
         {/* eslint-disable */}
       <div className='chat_list__div'>
         {/* @ts-ignore */}
-            {conversations && conversations.map(el => {
+            {(conversations.length>0) ? conversations.map(el => {
             return (
               <div key={el}>
                   {/* @ts-ignore */}
                   <MatchesList handleChatChange={handleChatChange} conversation={el} currentUserId={user._id}/>
               </div>
-        )
-      })}
+            )
+            }) : (
+            <span className='matches_error__span'>Here your matches will appear !</span>
+            )}
       </div>
         {currentChat ? 
             /* @ts-ignore */
