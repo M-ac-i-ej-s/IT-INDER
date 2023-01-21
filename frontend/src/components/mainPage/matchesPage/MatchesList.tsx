@@ -2,9 +2,11 @@ import React, {useEffect, useState} from 'react'
 import '../../../styles/mainPage/matchesList.scss'
 import PropTypes, {InferProps} from 'prop-types';
 import axios from 'axios'
+import Loader from '../../reusableComponents/Loader';
 
 function MatchesList({conversation, currentUserId, handleChatChange}: InferProps<typeof MatchesList.propTypes>) {
   const [user, setUser] = useState({})
+  const [loading, setLoading] = useState(false)
 
   const getUserById = async (id) => {
     await axios
@@ -12,6 +14,7 @@ function MatchesList({conversation, currentUserId, handleChatChange}: InferProps
             .then((response) => {
               const user = response.data.User;
               setUser(user[0])
+              setLoading(true)
             })
             .catch((error) => {
                 console.log(error);
@@ -24,15 +27,21 @@ function MatchesList({conversation, currentUserId, handleChatChange}: InferProps
     const friendId = conversation.members.find(m => m !== currentUserId)
     /* eslint-enable */
     getUserById(friendId)
-  },[])
+  },[conversation])
 
   return (
-        <div onClick={() => handleChatChange(conversation)} className='chat_match__div'>
+      <>
+        {loading ? 
+          <div onClick={() => handleChatChange(conversation)} className='chat_match__div'>
             {/* eslint-disable */}
             {/* @ts-ignore */}
             <span className='name__span'>{user.name}</span>
             {/* eslint-enable */}
-        </div>
+          </div>
+          : 
+          <Loader/>
+        }
+        </>
   )
 }
 
