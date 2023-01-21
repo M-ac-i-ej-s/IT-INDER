@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import CreatableSelect from 'react-select/creatable';
 import '../../styles/welcomePage/workerForm.scss'
 import {  TextField, FormControl, OutlinedInput, InputAdornment, IconButton, Button } from '@mui/material';
@@ -102,7 +102,7 @@ function WorkerForm() {
    <div className='worker__div'>
         <form onSubmit={formik.handleSubmit} className='worker__form'>
           <FormControl color='primary' sx={{ width: '25ch', margin: '10px', backgroundColor:'white', borderRadius:'5px' }}>
-            <OutlinedInput id='name 1' name='name' value={formik.values.name} onChange={formik.handleChange} placeholder="Your name" />
+            <OutlinedInput id='name 1' name='name' value={formik.values.name} onChange={formik.handleChange} placeholder="Your name" inputProps={{ maxLength: 10 }} />
           </FormControl>
           <div className='description__box'>
               <TextField
