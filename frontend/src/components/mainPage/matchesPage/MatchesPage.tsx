@@ -6,6 +6,7 @@ import axios from 'axios'
 import '../../../styles/mainPage/matchesPage.scss'
 import authHeader from '../../../services/auth-header'
 import {io} from 'socket.io-client'
+import Loader from '../../reusableComponents/Loader'
 
 function MatchesPage() {
   const [conversations, setConversations] = useState([])
@@ -173,16 +174,18 @@ function MatchesPage() {
         {/* eslint-disable */}
       <div className='chat_list__div'>
         {/* @ts-ignore */}
-            {(conversations.length>0) ? conversations.map(el => {
+            {(conversations.length>0 && loading && user._id) ? conversations.map(el => {
             return (
               <div key={el}>
                   {/* @ts-ignore */}
                   <MatchesList handleChatChange={handleChatChange} conversation={el} currentUserId={user._id}/>
               </div>
             )
-            }) : (
+            }) : (!loading) ? (
+            <Loader/>
+            ) :
             <span className='matches_error__span'>Here your matches will appear !</span>
-            )}
+            }
       </div>
         {currentChat ? 
             /* @ts-ignore */

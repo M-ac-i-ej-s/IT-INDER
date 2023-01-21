@@ -31,16 +31,12 @@ function MatchesList({conversation, currentUserId, handleChatChange}: InferProps
 
   return (
       <>
-        {loading ? 
           <div onClick={() => handleChatChange(conversation)} className='chat_match__div'>
             {/* eslint-disable */}
             {/* @ts-ignore */}
             <span className='name__span'>{user.name}</span>
             {/* eslint-enable */}
           </div>
-          : 
-          <Loader/>
-        }
         </>
   )
 }
