@@ -176,7 +176,7 @@ function MatchesPage() {
         {/* @ts-ignore */}
             {(conversations.length>0 && loading && user._id) ? conversations.map(el => {
             return (
-              <div key={el}>
+              <div key={el._id}>
                   {/* @ts-ignore */}
                   <MatchesList handleChatChange={handleChatChange} conversation={el} currentUserId={user._id}/>
               </div>
