@@ -1,19 +1,14 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useReducer} from 'react';
 import Tile from './Tile'
 import axios from 'axios'
 import '../../../styles/mainPage/explorePage.scss'
 import authHeader from '../../../services/auth-header';
-import { useAppSelector, useAppDispatch } from '../mainPageApp/hooks'
-import {
-  SETLEFT,
-  SETRENDER
-} from './exploreSlice';
 import {setCookie} from '../../../services/cookie-fun'
+import {reducer} from './animationReducer'
  
 function ExplorePage() {
-  const matchStyle = useAppSelector(state => state.explore.matchStyle);
-  const render = useAppSelector(state => state.explore.render);
-  const dispatch = useAppDispatch();
+  const [state, dispatch] = useReducer(reducer, {matchStyle: {left:'-3250px'},render: true,})
+
   const [user, setUser] = useState({})
   const [userTile, setUserTile] = useState({});
   const [loading, setLoading] = useState(false)
@@ -170,20 +165,38 @@ function ExplorePage() {
       /* @ts-ignore */
       createConversation(userTile._id)
       /* eslint-enable */
-      dispatch(SETRENDER(true))
-      dispatch(SETLEFT('0px'))
+      dispatch({
+        type: 'set_render',
+        render: true
+      })
+      dispatch({
+        type: 'set_left',
+        left: '0px'
+      })
       document.documentElement.style.setProperty('--pointerEvents','auto')
       document.documentElement.style.setProperty('--bodyColor','rgb(0, 0, 0, 0.5)' )
       setTimeout(() => {
-        dispatch(SETLEFT('3250px'))
+        dispatch({
+          type: 'set_left',
+          left: '3250px'
+        })
         document.documentElement.style.setProperty('--bodyColor','rgb(0, 0, 0, 0)' )
         setTimeout(() => {
           nextFunction()
           document.documentElement.style.setProperty('--pointerEvents','none')
-          dispatch(SETRENDER(false))
-          dispatch(SETLEFT('-3250px'))
+          dispatch({
+            type: 'set_render',
+            render: false
+          })
+          dispatch({
+            type: 'set_left',
+            left: '-3250px'
+          })
           setTimeout(() => {
-            dispatch(SETRENDER(true))
+            dispatch({
+              type: 'set_render',
+              render: true
+            })
           },500)
         },1000)
       },2500)
@@ -200,8 +213,8 @@ function ExplorePage() {
       {/* @ts-ignore */}
       <Tile loading={loading} dislikeFun={dislike} likeFun={like} name={userTile ? userTile.name : ''} description={userTile ? userTile.description : ''} languages={userTile ? userTile.languages : ['']} id={userTile ? userTile._id : ''}/>
       { /* eslint-enable */ }
-        {render &&
-          <div style={matchStyle} className='sign__div'>
+        {state.render &&
+          <div style={state.matchStyle} className='sign__div'>
             <p className='sign__p its'>IT&apos;S A</p>
             <p className='sign__p match'>MATCH !</p>
           </div>
