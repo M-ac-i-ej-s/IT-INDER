@@ -53,19 +53,6 @@ function ExplorePage() {
           });
   }
 
-  const firstTime = async () => {
-    await axios
-          .put('http://localhost:3001/users/firstTime', {
-            headers:authHeader(),
-          })
-          .then(() => {
-            console.log('done')
-          })
-          .catch((error) => {
-              console.log(error);
-          });
-  }
-
   const createConversation = async (id) => {
     await axios
           .post('http://localhost:3001/conversations/', 

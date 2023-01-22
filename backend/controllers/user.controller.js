@@ -2,6 +2,7 @@ import mongoose from 'mongoose';
 import User from '../models/user.model.js';
 import bcrypt from 'bcrypt';
 
+
 export const getAllUsers = async (req, res) => {
     const sortByLanguages = (users, pattern) => {
         const newArr = users
@@ -52,6 +53,38 @@ export const getAllUsers = async (req, res) => {
             });
         });
 };
+
+export const searchAllUsers = async (req, res) => {
+    const name = req.query.name || '.*'
+    const description = req.query.description || '.*'
+    const email = req.query.email || '.*'
+    let type = req.query.type || '.*'
+    if(type === 'any') type = '.*'
+    await User.find({
+        $and: [
+            {name: {$regex: `^.*${name}.*$`, $options: 'i'}},
+            {description: {$regex: `^.*${description}.*$`, $options: 'i'}},
+            // // {languages: {$in: languages}},
+            {email:{$regex: `^.*${email}.*$`, $options: 'i'}},
+            {type:{$regex: `^.*${type}.*$`, $options: 'i'}}
+        ]
+    })
+        .then((allUsers) => {
+            res.status(200).json({
+                success: true,
+                message: 'All users',
+                Users: allUsers,
+            });
+        })
+        .catch((err) => {
+            res.status(500).json({
+                success: false,
+                message: 'Server Failed',
+                error: err.message,
+            });
+        });
+};
+
 
 export const getOneUser = async (req, res) => {
     const userId = req.user;
@@ -104,7 +137,6 @@ export const createUser = async (req, res) => {
                 description: req.body.description,
                 languages: req.body.languages,
                 isActive: false,
-                firstTime:false,
                 likes: [],
                 dislikes: [],
                 matches: [],
@@ -277,6 +309,22 @@ export const dislike = async (req, res) => {
 
 export const deleteUser = async (req, res) => {
     const userId = req.user;
+    await User.findByIdAndRemove(userId)
+        .exec()
+        .then(() =>
+            res.status(204).json({
+                success: true,
+            })
+        )
+        .catch((err) =>
+            res.status(500).json({
+                success: false,
+            })
+        );
+};
+
+export const banUser = async (req, res) => {
+    const userId = req.query.id;
     await User.findByIdAndRemove(userId)
         .exec()
         .then(() =>
