@@ -51,3 +51,24 @@ export const getMessage = async (req, res) => {
     });
     })
   }  
+
+  export const deleteMessage = async (req, res) => {
+    await Message.findByIdAndUpdate(
+          req.params.messageId,
+          {
+              text: ''
+          },
+          { new: true }
+        ).then((message) => {
+          res.status(200).json({
+              success: true,
+              message: 'message is deleted',
+          });
+      })
+      .catch((err) => {
+          res.status(500).json({
+              success: false,
+              message: 'Server error. Please try again.',
+          });
+      });
+  }  
