@@ -9,8 +9,9 @@ import { login } from '../../services/auth.service';
 import { useFormik } from 'formik';
 import authHeader from '../../services/auth-header';
 import {useNavigate} from 'react-router-dom'
+import PropTypes, {InferProps} from 'prop-types';
 
-function LoginForm() {
+function LoginForm({admin}: InferProps<typeof LoginForm.propTypes>) {
   const [showPassword, setShowPassword] = React.useState(false);
   const [borderError, setBorderError] = React.useState('white')
   const dispatch = useDispatch();
@@ -45,9 +46,13 @@ function LoginForm() {
         login(values.email, values.password)
                 .then((response) => {
                     dispatch(LOGGEDIN(response.User));
-                    navigate('/home/explore');
                     setSubmitting(false);
                     authHeader();
+                    if(admin){
+                      navigate('/admin/logged')
+                    } else {
+                      navigate('/home/explore');
+                    }
                 })
                 .catch(() => {
                     setBorderError('red')
@@ -96,6 +101,10 @@ function LoginForm() {
         </form>
    </div>
   );
+}
+
+LoginForm.propTypes = {
+  admin: PropTypes.bool
 }
 
 export default LoginForm;

@@ -10,7 +10,6 @@ const UserSchema = new mongoose.Schema(
         description: {type: String, required: true},
         languages: {type: Array, require: true},
         isActive: {type: String, default: ''},
-        firstTime: {type: Boolean, default: false},
         likes: {type: Array, default:[]},
         dislikes: {type: Array, default: []},
         email: { type: String, required: true },
