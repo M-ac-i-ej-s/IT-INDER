@@ -8,6 +8,7 @@ import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
 import { useFormik } from 'formik';
 import { register } from '../../services/auth.service';
 import {useNavigate} from 'react-router-dom'
+import Swal from 'sweetalert2';
 import authHeader from '../../services/auth-header';
 
 function ManagerForm() {
@@ -73,7 +74,7 @@ function ManagerForm() {
       password: '',
     },
     onSubmit: (values: user, { setSubmitting }) => {
-      if(!validateEmail(values.email)){
+      if(!validateEmail(values.email) && languages.length > 0){
         register('project',values.name, values.description, languages.map(el => el.label), values.email, values.password)
                 .then(() => {
                     navigate('/login');
@@ -84,7 +85,20 @@ function ManagerForm() {
                     setBorderError('red')
                 });
       } else {
-        setBorderError('red')
+        if(languages.length === 0) {
+          Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: 'You need to add at least one language!',
+          })
+        } else {
+          Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: 'Invalid Email!',
+          })
+          setBorderError('red')
+        }
       }
       handleReset()
     },
@@ -102,7 +116,7 @@ function ManagerForm() {
    <div className='manager__div'>
         <form className='manager__form' onSubmit={formik.handleSubmit}>
           <FormControl color='secondary' sx={{ width: '25ch', margin: '10px', backgroundColor:'white', borderRadius:'5px' }} >
-            <OutlinedInput id='name' name='name' value={formik.values.name} onChange={formik.handleChange} onBlur={formik.handleBlur} placeholder="Project's name" />
+            <OutlinedInput id='name' name='name' value={formik.values.name} onChange={formik.handleChange} onBlur={formik.handleBlur} placeholder="Project's name" required/>
           </FormControl>
           <div className='description__box'> 
             <TextField
@@ -118,6 +132,7 @@ function ManagerForm() {
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
             sx={{width: '300px', margin: '10px', backgroundColor:'white', borderRadius:'5px'}}
+            required
            />
            <InfoOutlinedIcon onMouseOver={handleMouseOver} onMouseOut={handleMouseOut} sx={{color: 'white', opacity: '0.6'}}/>
           </div>
@@ -150,6 +165,7 @@ function ManagerForm() {
               value={formik.values.password} 
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
+              required
             />
         </FormControl>
         <Button type='submit' sx={{width:'120px', margin: '10px'}} color="secondary" variant="contained" size="large">Register</Button>

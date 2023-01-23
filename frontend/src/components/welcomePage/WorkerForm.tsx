@@ -8,6 +8,7 @@ import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
 import { useFormik } from 'formik';
 import { register } from '../../services/auth.service';
 import {useNavigate} from 'react-router-dom'
+import Swal from 'sweetalert2';
 import authHeader from '../../services/auth-header';
 
 function WorkerForm() {
@@ -73,7 +74,7 @@ function WorkerForm() {
       password: '',
     },
     onSubmit: (values: userProject, { setSubmitting }) => {
-      if(!validateEmail(values.email)){
+      if(!validateEmail(values.email) && languages.length > 0){
         register('programmer',values.name, values.description, languages.map(el => el.label), values.email, values.password)
                 .then(() => {
                     navigate('/login');
@@ -84,7 +85,20 @@ function WorkerForm() {
                     setBorderError('red')
                 });
       } else {
-        setBorderError('red')
+        if(languages.length === 0) {
+            Swal.fire({
+              icon: 'error',
+              title: 'Oops...',
+              text: 'You need to add at least one language!',
+            })
+          } else {
+          Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: 'Invalid Email!',
+          })
+          setBorderError('red')
+        }
       }
       handleReset()
     },
