@@ -24,6 +24,7 @@ function ExplorePage() {
               setUserTile(user);
               setTileUserActive(user._id);
             } else {
+              setTileUserActive('')
               setUserTile({
                 name: '',
               });
