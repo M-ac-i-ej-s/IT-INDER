@@ -14,6 +14,7 @@ function AdminPage() {
     const [users, setUsers] = useState([])
     const [loading, setLoading] = useState(false)
     const [type, setType] = useState('')
+    const [access, setAccess] = useState(false)
 
     const options = [
         { value: 'javascript', label: 'JavaScript' },
@@ -45,6 +46,22 @@ function AdminPage() {
                   console.log(error);
               });
     }
+
+    const getUser = async () => {
+        await axios
+              .get('http://localhost:3001/users/you', {
+                headers: authHeader(),
+              })
+              .then((response) => {
+                const user = response.data.User;
+                if(user[0].type === 'admin'){
+                    setAccess(true)
+                }
+              })
+              .catch((error) => {
+                  console.log(error);
+              });
+      }
 
     const banUser = async (id) => {
         await axios
@@ -85,90 +102,103 @@ function AdminPage() {
     }
 
     useEffect(() => {
+        getUser() 
+    })
+
+    useEffect(() => {
         getAllUsersByPattern(name, description, email, type)
     },[name, email, description, type])
 
   return (
     <>
-    <div className='top_admin__div'>
-        <span>ADMIN PANEL</span>
-        <LocalPoliceIcon color='secondary' sx={{fontSize:'100px'}}/>
-    </div>
-    <div className='admin__div'>
-        <div className='search__div'>
-            <FormControl fullWidth sx={{width:'200px', marginLeft:'10px'}}>
-            <InputLabel id="demo-simple-select-label" color='secondary'>Type</InputLabel>
-                <Select
+    { access ? 
+        <>
+        <div className='top_admin__div'>
+            <span>ADMIN PANEL</span>
+            <LocalPoliceIcon color='secondary' sx={{fontSize:'100px'}}/>
+        </div>
+        <div className='admin__div'>
+            <div className='search__div'>
+                <FormControl fullWidth sx={{width:'200px', marginLeft:'10px'}}>
+                <InputLabel id="demo-simple-select-label" color='secondary'>Type</InputLabel>
+                    <Select
+                        color='secondary'
+                        labelId="demo-simple-select-label"
+                        id="demo-simple-select"
+                        value={type}
+                        label="type"
+                        onChange={(e) => setType(e.target.value)}
+                    >
+                        <MenuItem value={'any'}>Any</MenuItem>
+                        <MenuItem value={'programmer'}>Programmer</MenuItem>
+                        <MenuItem value={'project'}>Project</MenuItem>
+                    </Select>
+                </FormControl>
+                <FormControl color='secondary' sx={{ width: '25ch', margin: '10px', backgroundColor:'white', borderRadius:'5px' }} >
+                    <OutlinedInput id='name' name='name' value={name} onChange={(e) => setName(e.target.value)} placeholder="Project's name" />
+                </FormControl>
+                <div> 
+                    <TextField
+                    id="outlined-basic 2"
+                    name='description'
+                    label="Description"
+                    variant="outlined"
                     color='secondary'
-                    labelId="demo-simple-select-label"
-                    id="demo-simple-select"
-                    value={type}
-                    label="type"
-                    onChange={(e) => setType(e.target.value)}
-                >
-                    <MenuItem value={'any'}>Any</MenuItem>
-                    <MenuItem value={'programmer'}>Programmer</MenuItem>
-                    <MenuItem value={'project'}>Project</MenuItem>
-                </Select>
-            </FormControl>
-            <FormControl color='secondary' sx={{ width: '25ch', margin: '10px', backgroundColor:'white', borderRadius:'5px' }} >
-                <OutlinedInput id='name' name='name' value={name} onChange={(e) => setName(e.target.value)} placeholder="Project's name" />
-            </FormControl>
-            <div> 
-                <TextField
-                id="outlined-basic 2"
-                name='description'
-                label="Description"
-                variant="outlined"
-                color='secondary'
-                multiline
-                rows={4}
-                inputProps={{ maxLength: 250 }}
-                value={description} 
-                onChange={(e) => setDescription(e.target.value)}
-            
-                sx={{width: '300px', margin: '10px', backgroundColor:'white', borderRadius:'5px'}}
-            />
+                    multiline
+                    rows={4}
+                    inputProps={{ maxLength: 250 }}
+                    value={description} 
+                    onChange={(e) => setDescription(e.target.value)}
+                
+                    sx={{width: '300px', margin: '10px', backgroundColor:'white', borderRadius:'5px'}}
+                />
+                </div>
+                <FormControl color='secondary' sx={{ width: '30ch', margin: '10px', backgroundColor:'white', borderRadius:'5px'}}>
+                    <OutlinedInput id='email 1' name='email' value={email} onChange={(e) => setEmail(e.target.value)} placeholder='Email' />
+                </FormControl>
             </div>
-            <FormControl color='secondary' sx={{ width: '30ch', margin: '10px', backgroundColor:'white', borderRadius:'5px'}}>
-                <OutlinedInput id='email 1' name='email' value={email} onChange={(e) => setEmail(e.target.value)} placeholder='Email' />
-            </FormControl>
+            <div className='users_display__div'>
+                {loading ? users.map(el => {
+                    return (
+                    <div key={el._id}>
+                        <div className='user_display__div'>
+                            <div className='rubric__div'>
+                                <span className='type__span'>type:</span>
+                                <span className='result__span'>{el.type}</span>
+                            </div>
+                            <div className='rubric__div'>
+                                <span className='type__span'>name:</span>
+                                <span className='result__span'>{el.name}</span>
+                            </div>
+                            <div className='rubric__div'>
+                                <span className='type__span'>description:</span>
+                                <span className='result__span'>{el.description}</span>
+                            </div>
+                            <div className='rubric__div'>
+                                <span className='type__span'>languages:</span>
+                                <span className='result__span'>{el.languages.map(el => {
+                                    return <span key={el}>{el}</span>
+                                })}</span>
+                            </div>
+                            <div className='rubric__div'>
+                                <span className='type__span'>email:</span>
+                                <span className='result__span'>{el.email}</span>
+                            </div>
+                            <Button onClick={() => handleBanUser(el._id)} variant='contained' color='error' sx={{width:'320px', marginTop:'20px'}}>Ban</Button>
+                        </div>
+                    </div>)
+                }) : (
+                    <Loader/>
+                )}
+            </div>
         </div>
-        <div className='users_display__div'>
-            {loading ? users.map(el => {
-                return (
-                <div key={el._id}>
-                    <div className='user_display__div'>
-                        <div className='rubric__div'>
-                            <span className='type__span'>type:</span>
-                            <span className='result__span'>{el.type}</span>
-                        </div>
-                        <div className='rubric__div'>
-                            <span className='type__span'>name:</span>
-                            <span className='result__span'>{el.name}</span>
-                        </div>
-                        <div className='rubric__div'>
-                            <span className='type__span'>description:</span>
-                            <span className='result__span'>{el.description}</span>
-                        </div>
-                        <div className='rubric__div'>
-                            <span className='type__span'>languages:</span>
-                            <span className='result__span'>{el.languages.map(el => {
-                                return <span key={el}>{el}</span>
-                            })}</span>
-                        </div>
-                        <div className='rubric__div'>
-                            <span className='type__span'>email:</span>
-                            <span className='result__span'>{el.email}</span>
-                        </div>
-                        <Button onClick={() => handleBanUser(el._id)} variant='contained' color='error' sx={{width:'320px', marginTop:'20px'}}>Ban</Button>
-                    </div>
-                </div>)
-            }) : (
-                 <Loader/>
-            )}
-        </div>
+        </>    
+    : 
+    <div className='top_admin__div error'>
+        <span className='access__span'>You dont have acces to admin panel</span>
+        <LocalPoliceIcon color='error' sx={{fontSize:'60px'}}/>
     </div>
+    }
     </>
   )
 }
