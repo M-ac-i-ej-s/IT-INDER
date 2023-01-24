@@ -16,21 +16,6 @@ function AdminPage() {
     const [type, setType] = useState('')
     const [access, setAccess] = useState(false)
 
-    const options = [
-        { value: 'javascript', label: 'JavaScript' },
-        { value: 'react', label: 'React' },
-        { value: 'angularjs', label: 'Angular' },
-        { value: 'vuejs', label: 'Vue' },
-        { value: 'java', label: 'Java' },
-        { value: 'python', label: 'Python' },
-        { value: 'cplusplus', label: 'C++' },
-        { value: 'php', label: 'PHP' },
-        { value: 'mysql', label: 'SQL' },
-        { value: 'go', label: 'GO' }, // wordmark
-        { value: 'csharp', label: 'C#' },
-        { value: 'scala', label: 'Scala' },
-    ]
-
     const getAllUsersByPattern = async (name, description, email, type) => {
         await axios
                 .get(`http://localhost:3001/users/searchByPattern?name=${name}&description=${description}&email=${email}&type=${type}`, {
@@ -40,7 +25,6 @@ function AdminPage() {
                 const users = response.data.Users;
                 console.log(users)
                 setUsers(users.filter(el => el.type !== 'admin'))
-                setLoading(true)
               })
               .catch((error) => {
                   console.log(error);
@@ -56,6 +40,7 @@ function AdminPage() {
                 const user = response.data.User;
                 if(user[0].type === 'admin'){
                     setAccess(true)
+                    setLoading(true)
                 }
               })
               .catch((error) => {
