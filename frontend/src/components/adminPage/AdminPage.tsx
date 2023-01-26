@@ -18,7 +18,7 @@ function AdminPage() {
 
     const getAllUsersByPattern = async (name, description, email, type) => {
         await axios
-                .get(`http://localhost:3001/users/searchByPattern?name=${name}&description=${description}&email=${email}&type=${type}`, {
+                .get(`https://localhost:3001/users/searchByPattern?name=${name}&description=${description}&email=${email}&type=${type}`, {
                     headers: authHeader(),
                 })
               .then((response) => {
@@ -33,7 +33,7 @@ function AdminPage() {
 
     const getUser = async () => {
         await axios
-              .get('http://localhost:3001/users/you', {
+              .get('https://localhost:3001/users/you', {
                 headers: authHeader(),
               })
               .then((response) => {
@@ -51,7 +51,7 @@ function AdminPage() {
     const banUser = async (id) => {
         await axios
             .delete(
-                `http://localhost:3001/users/ban?id=${id}`,
+                `https://localhost:3001/users/ban?id=${id}`,
                 {
                   headers: authHeader(),             
                 }

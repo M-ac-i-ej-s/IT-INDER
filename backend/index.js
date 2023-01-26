@@ -8,6 +8,9 @@ import bodyParser from 'body-parser';
 import mongoose from 'mongoose';
 import dotenv from 'dotenv';
 import cors from 'cors';
+import https from 'https';
+import path from 'path';
+import fs from 'fs';
 
 dotenv.config();
 const app = express();
@@ -50,6 +53,11 @@ app.use('/auth', authRouter);
 app.use('/messages', messageRouter);
 app.use('/conversations', conversationRouter);
 
-app.listen(process.env.PORT, () => {
+const sslServer = https.createServer({
+    key:fs.readFileSync(path.join('./cert/key.pem')),
+    cert:fs.readFileSync(path.join('./cert/cert.pem'))
+}, app)
+
+sslServer.listen(process.env.PORT, () => {
     console.log(`Our server is running on port ${process.env.PORT}`);
 });

@@ -1,5 +1,5 @@
 import axios from 'axios';
-const API_URL = 'http://localhost:3001/auth/';
+const API_URL = 'https://localhost:3001/auth/';
 
 export const register = (type, name, description,languages,email, password ) => {
     return axios

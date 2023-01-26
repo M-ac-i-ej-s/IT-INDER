@@ -24,7 +24,7 @@ function WelcomePage() {
 
   const getUserById = async (id) => {
     await axios
-            .get(`http://localhost:3001/users/${id}`)
+            .get(`https://localhost:3001/users/${id}`)
             .then((response) => {
               const user = response.data.User;
               login(user[0].email, user[0].password, '?cookie=true')

@@ -16,7 +16,7 @@ function SettingsPage() {
    const edit = async () => {
         await axios
               .put(
-                'http://localhost:3001/users/reset', 
+                'https://localhost:3001/users/reset', 
                 {
                     test: 'test'
                 },
@@ -38,7 +38,7 @@ function SettingsPage() {
   const deleteUser = async () => {
     await axios
           .delete(
-            'http://localhost:3001/users/delete',
+            'https://localhost:3001/users/delete',
             {
               headers: authHeader(),             
             }
@@ -56,7 +56,7 @@ function SettingsPage() {
   const deleteConversations = async () => {
     await axios
           .delete(
-            'http://localhost:3001/conversations/delete',
+            'https://localhost:3001/conversations/delete',
             {
               headers: authHeader(),             
             }
@@ -72,7 +72,7 @@ function SettingsPage() {
   const deleteMessages = async () => {
     await axios
           .delete(
-            'http://localhost:3001/messages/delete',
+            'https://localhost:3001/messages/delete',
             {
               headers: authHeader(),             
             }
@@ -146,7 +146,7 @@ function SettingsPage() {
 
   const downloadTxtFile = async () => {
     await axios
-          .get('http://localhost:3001/users/you', {
+          .get('https://localhost:3001/users/you', {
             headers: authHeader(),
           })
           .then((response) => {

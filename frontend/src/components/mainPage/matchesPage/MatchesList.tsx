@@ -10,7 +10,7 @@ function MatchesList({conversation, currentUserId, handleChatChange}: InferProps
 
   const getUserById = async (id) => {
     await axios
-            .get(`http://localhost:3001/users/${id}`)
+            .get(`https://localhost:3001/users/${id}`)
             .then((response) => {
               const user = response.data.User;
               setUser(user[0])
