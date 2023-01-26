@@ -19,7 +19,7 @@ function Message({message,isFrom}: InferProps<typeof Message.propTypes>) {
       await axios
             .put(
                 /* @ts-ignore */
-              `http://localhost:3001/messages/${message._id}`,
+              `https://localhost:3001/messages/${message._id}`,
               {
                 body:''
               },

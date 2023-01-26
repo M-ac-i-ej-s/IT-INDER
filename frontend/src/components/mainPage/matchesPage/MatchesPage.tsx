@@ -21,7 +21,7 @@ function MatchesPage() {
 
   const getUser = async () => {
     await axios
-          .get('http://localhost:3001/users/you', {
+          .get('https://localhost:3001/users/you', {
             headers: authHeader(),
           })
           .then((response) => {
@@ -36,7 +36,7 @@ function MatchesPage() {
 
   const getConversations = async () => {
     await axios
-          .get('http://localhost:3001/conversations/yours', {
+          .get('https://localhost:3001/conversations/yours', {
             headers: authHeader(),
           })
           .then(res => {
@@ -56,7 +56,7 @@ function MatchesPage() {
 
   const getMessages = async (id) => {
     await axios
-      .get(`http://localhost:3001/messages/${id}`, {
+      .get(`https://localhost:3001/messages/${id}`, {
         headers: authHeader(),
       })
       .then(res => {
@@ -74,7 +74,7 @@ function MatchesPage() {
 
   const getUserById = async (id) => {
     await axios
-            .get(`http://localhost:3001/users/${id}`)
+            .get(`https://localhost:3001/users/${id}`)
             .then((response) => {
               const user = response.data.User;
               setReceiver(user[0])
@@ -113,7 +113,7 @@ function MatchesPage() {
     })
 
     await axios.
-          post('http://localhost:3001/messages/', 
+          post('https://localhost:3001/messages/', 
             message,
           {
             headers: {

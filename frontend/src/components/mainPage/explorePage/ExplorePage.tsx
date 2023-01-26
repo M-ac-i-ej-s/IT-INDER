@@ -15,7 +15,7 @@ function ExplorePage() {
 
   const getAllUsers = async () => {
     await axios
-          .get('http://localhost:3001/users/', {
+          .get('https://localhost:3001/users/', {
             headers: authHeader(),
           })
           .then((response) => {
@@ -38,7 +38,7 @@ function ExplorePage() {
 
   const setTileUserActive = async (id) => {
     await axios
-          .put('http://localhost:3001/users/active', 
+          .put('https://localhost:3001/users/active', 
           {
             id: id
           },
@@ -56,7 +56,7 @@ function ExplorePage() {
 
   const createConversation = async (id) => {
     await axios
-          .post('http://localhost:3001/conversations/', 
+          .post('https://localhost:3001/conversations/', 
           {
             receiverId: id
           },
@@ -75,7 +75,7 @@ function ExplorePage() {
   const like = async (id) => {
     await axios
           .put(
-            'http://localhost:3001/users/like',
+            'https://localhost:3001/users/like',
             {
               id: id
             },
@@ -98,7 +98,7 @@ function ExplorePage() {
   const dislike = async (id) => {
     await axios
           .put(
-            'http://localhost:3001/users/dislike',
+            'https://localhost:3001/users/dislike',
             {
               id: id
             },
@@ -120,7 +120,7 @@ function ExplorePage() {
 
   const getUser = async () => {
     await axios
-          .get('http://localhost:3001/users/you', {
+          .get('https://localhost:3001/users/you', {
             headers: authHeader(),
           })
           .then((response) => {

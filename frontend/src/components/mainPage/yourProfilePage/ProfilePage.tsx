@@ -38,7 +38,7 @@ function ProfilePage() {
 
   const getUser = async () => {
     await axios
-          .get('http://localhost:3001/users/you', {
+          .get('https://localhost:3001/users/you', {
             headers: authHeader(),
           })
           .then((response) => {
