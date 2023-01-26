@@ -17,7 +17,7 @@ const app = express();
 mongoose.set('strictQuery', false)
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
-const whitelist = ['http://localhost:3001','http://localhost:3000' ];
+const whitelist = ['https://localhost:3001','https://localhost:3000' ];
 const corsOptions = {
     credentials: true,
     origin: function (origin, callback) {

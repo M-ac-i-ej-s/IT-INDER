@@ -116,7 +116,7 @@ function WorkerForm() {
    <div className='worker__div'>
         <form onSubmit={formik.handleSubmit} className='worker__form'>
           <FormControl color='primary' sx={{ width: '25ch', margin: '10px', backgroundColor:'white', borderRadius:'5px' }}>
-            <OutlinedInput id='name 1' name='name' value={formik.values.name} onChange={formik.handleChange} placeholder="Your name" inputProps={{ maxLength: 10 }} />
+            <OutlinedInput id='name 1' name='name' value={formik.values.name} onChange={formik.handleChange} placeholder="Your name" inputProps={{ maxLength: 10 }} required/>
           </FormControl>
           <div className='description__box'>
               <TextField
@@ -130,6 +130,7 @@ function WorkerForm() {
               sx={{width: '300px', margin: '10px', backgroundColor:'white', borderRadius:'5px'}}
               value={formik.values.description} 
               onChange={formik.handleChange}
+              required
               />
               <InfoOutlinedIcon onMouseOver={handleMouseOver} onMouseOut={handleMouseOut} sx={{color: 'white', opacity: '0.6'}}/>
           </div>
@@ -138,7 +139,7 @@ function WorkerForm() {
           <CreatableSelect classNamePrefix="mySelect" className='lang__select' isMulti options={options} onChange={handleMultiChange} value={languages} isOptionDisabled={() => languages.length >= 6}/>
           { /* eslint-enable */ }
           <FormControl color='primary' sx={{ width: '30ch', margin: '10px', backgroundColor:'white', borderRadius:'5px',border: (borderError === 'white') ? 0 :`1px solid ${borderError}` }}>
-            <OutlinedInput id='email 2' name='email' value={formik.values.email} onChange={formik.handleChange} placeholder={(borderError === 'white') ? 'Email' : 'Invalid Email!'} />
+            <OutlinedInput id='email 2' name='email' value={formik.values.email} onChange={formik.handleChange} placeholder={(borderError === 'white') ? 'Email' : 'Invalid Email!'} required/>
           </FormControl>
           <FormControl color='primary' sx={{ width: '25ch', margin: '10px',backgroundColor:'white', borderRadius:'5px' }}>
             <OutlinedInput
@@ -159,6 +160,7 @@ function WorkerForm() {
                     </IconButton>
                   </InputAdornment>
                 }
+                required
                 value={formik.values.password} 
                 onChange={formik.handleChange}
               />
