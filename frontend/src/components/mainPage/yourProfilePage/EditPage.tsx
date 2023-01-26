@@ -184,6 +184,7 @@ function EditPage() {
                 onChange={formik.handleChange}
                 onBlur={formik.handleBlur}
                 sx={{width: '300px', margin: '10px', backgroundColor:'white', borderRadius:'5px'}}
+                required
               />
               <InfoOutlinedIcon onMouseOver={handleMouseOver} onMouseOut={handleMouseOut} sx={{color: 'purple', opacity: '0.6', position: 'absolute'}}/>
             </div>

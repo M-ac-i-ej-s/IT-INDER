@@ -78,14 +78,6 @@ function Message({message,isFrom}: InferProps<typeof Message.propTypes>) {
               }
               {/* @ts-ignore */}
              <span className='message_content__span'>{newMessage}</span>
-              {
-                !isFrom &&
-                <Tooltip style={{display:render}} title="Delete">
-                <IconButton onClick={handleDeleteMessage}>
-                  <DeleteIcon />
-                </IconButton>
-              </Tooltip>
-              }
              </div>
           </>
         :
