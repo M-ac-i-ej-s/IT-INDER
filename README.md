@@ -1,1 +1,15 @@
-[![Open in Visual Studio Code](https://classroom.github.com/assets/open-in-vscode-c66648af7eb3fe8bc4f294546bfd86ef473780cde1dea487d3c4ff354943c9ae.svg)](https://classroom.github.com/online_ide?assignment_repo_id=9545795&assignment_repo_type=AssignmentRepo)
+# IT-INDER
+
+The main purpose of the page was to the developers who are looking for a project
+contact in the easiest way possible with the developers which have an idea but don't
+have time/experience/knowledge to execute it. The algorithm matches people based on
+their language preferences and then if both, the idea provider, and the programmer
+'swipe right' they are able to communicate through chat to establish later details.
+
+Stack:
+* React
+* TypeScript
+* Express
+* MongoDb
+* MUI
+* SASS
